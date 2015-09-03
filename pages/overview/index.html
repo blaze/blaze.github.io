@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>The Blaze Ecosystem</title>
+  <meta name="description" content="">
+  <meta name="author" content="Blaze Developers">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:100,200,300,400,600' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../../theme/css/normalize.css">
+  <link rel="stylesheet" href="../../theme/css/skeleton.css">
+  <link rel="stylesheet" href="../../theme/css/custom.css">
+
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type='text/javascript'>
+  $(function() {
+      $('pre').addClass('prettyprint');
+  });
+</script>
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+  <link rel="stylesheet" href="../../theme/css/github-prettify-theme.css">
+  <script src="../../theme/js/site.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../../theme/images/favicon.ico">
+
+</head>
+<body class="code-snippets-visible">
+
+    <div class="navbar-spacer"></div>
+    <nav class="navbar">
+      <div class="container">
+        <ul class="navbar-list">
+          <li class="navbar-item"><a class="navbar-link" href="../..">Home</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../pages/overview">Overview</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../pages/projects">Projects</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../pages/talks">Talks</a>
+          <!--li class="navbar-item"><a class="navbar-link" href="../../pages/examples">Examples</a></li-->
+          <!--li class="navbar-item"><a class="navbar-link" href="../../pages/team">Team</a></li-->
+          <li class="navbar-item"><a class="navbar-link" href="../../archives">Blog</a></li>
+        </ul>
+        <div>
+            <a class="navbar-link" href="../../"><img src="../../images/blaze_med.png" class="site-icon"></a>
+        </div>
+      </div>
+    </nav>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+<div class="container">
+    <section id="content">
+        <header  class="header">
+            <h1 class="blogpost-title">Overview</h1>
+        </header>
+            <div>
+            <p>The Blaze ecosystem is a set of libraries that help users store, describe, query and process data.</p>
+<h2>Data Processing Systems</h2>
+<p>There are three components in a data processing system: Data, Expressions and Computational Engines.</p>
+<ul>
+<li>
+<p><strong>Data</strong> can have different structure (tabular, nested or unstructured), live in different containers
+    and formats (e.g. csv, parquet, avro, compressed), and contain different information about itself or also
+    called metadata (e.g. column names, variable types).</p>
+</li>
+<li>
+<p><strong>Expressions</strong> are the syntax, API or language used to define a query or transformation to be
+    computed on the data.</p>
+</li>
+<li>
+<p><strong>Computational Engines or Backends</strong> are the executors of those expressions on some data (e.g.
+    database engine, Python libraries).</p>
+</li>
+</ul>
+<p>The following characteristics can define a particular Data Processing System:</p>
+<ul>
+<li><strong>Metadata</strong> that describes the structure and content of data in the system</li>
+<li><strong>Compression</strong> and <strong>access</strong> to data</li>
+<li><strong>Performance</strong> of the computational engine or backend</li>
+<li><strong>Expressiveness</strong> and <strong>simplicity</strong> of the language or API</li>
+</ul>
+<h2>The Blaze Ecosystem</h2>
+<p>The goal of the Blaze ecosystem is to simplify data processing for users by providing:</p>
+<ul>
+<li>A common language to describe data that it's independent of the Data Processing System, called
+<a href="http://blaze.github.io/pages/projects/datashape"><strong>datashape</strong></a>.</li>
+<li>A common interface to query data that it's independent of the Data Processing System, called
+<a href="http://blaze.github.io/pages/projects/blaze"><strong>blaze</strong></a>.</li>
+<li>A common utility library to move data from one format or system to another, called
+<a href="http://blaze.github.io/pages/projects/odo"><strong>odo</strong></a>.</li>
+<li>Compressed column stores, called <a href="http://blaze.github.io/pages/projects/bcolz"><strong>bcolz</strong></a> and
+<a href="http://blaze.github.io/pages/projects/castra"><strong>castra</strong></a>.</li>
+<li>A parallel computational engine, called <a href="http://blaze.github.io/pages/projects/dask"><strong>dask</strong></a>.</li>
+</ul>
+<h2>Learn more</h2>
+<p>Learn how the projects in the Blaze Ecosystem can help you in the
+<a href="http://blaze.github.io/pages/examples">examples</a> section and our <a href="http://blaze.github.io/archives">blog</a>. The project
+repositories can be found under the <a href="https://github.com/blaze">Github Blaze Organization</a>. Feel free to reach out to the
+Blaze Developers through our mailing list, blaze-dev@continuum.io.</p>
+            </div>
+    </section>
+</div>
+
+
+    <div>
+        
+    </div>
+
+<br>
+
+  <!-- Google Analytics -->
+  <script type="text/javascript">
+  </script>
+
+<footer class="footer"></footer>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
