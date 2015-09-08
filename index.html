@@ -59,32 +59,27 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <div class="container">
-    <section class="header">
-      <div><img src="./images/blaze.png"></div>
-      <h2 class="title">The Blaze Ecosystem</h2>
-      <h4 class="subtitle">Connecting people to data</h4>
+    <section class="site-header">
+      <div><img class="header-logo" src="./images/blaze_med.png"><h2 class="title">The Blaze Ecosystem</h2></div>
     </section>
 
 
     <section class="home-section">
         <div class="row">
             <p>The Blaze ecosystem is a set of libraries that help users store, describe,
-            query and process data. It is composed of the following projects:</p>
+            query and process data. It is composed of the following core projects:</p>
         </div>
 
         <div class="row">
           <ul>
-                      <li class="talk-header"><a href="./pages/projects/bcolz/">Bcolz</a>: A columnar data container that can be compressed</li>
-                      <li class="talk-header"><a href="./pages/projects/blaze/">Blaze</a>: interface to query data on different storage systems</li>
-                      <li class="talk-header"><a href="./pages/projects/castra/">Castra</a>: A partitioned on-disk data structure</li>
-                      <li class="talk-header"><a href="./pages/projects/dask/">Dask</a>: Parallel computing through task scheduling and blocked algorithms</li>
-                      <li class="talk-header"><a href="./pages/projects/datashape/">Datashape</a>: Data description language</li>
-                      <li class="talk-header"><a href="./pages/projects/dynd/">DyND</a>: A C++ library for dynamic, multidimensional arrays</li>
-                      <li class="talk-header"><a href="./pages/projects/odo/">Odo</a>: Data migration between different storage systems</li>
+                        <li class="talk-header"><a href="http://blaze.pydata.org/en/latest/index.html">Blaze</a>: An interface to query data on different storage systems</li>
+                        <li class="talk-header"><a href="http://dask.readthedocs.org/en/latest/">Dask</a>: Parallel computing through task scheduling and blocked algorithms</li>
+                        <li class="talk-header"><a href="http://datashape.readthedocs.org/en/latest/">Datashape</a>: A data description language</li>
+                        <li class="talk-header"><a href="https://github.com/libdynd/dynd-python">DyND</a>: A C++ library for dynamic, multidimensional arrays</li>
+                        <li class="talk-header"><a href="http://odo.readthedocs.org/en/latest/">Odo</a>: Data migration between different storage systems</li>
           </ul>
         </div>
     </section>
-
 
     <section class="home-section">
       <h3 class="home-header">Recent blog posts</h3>
@@ -97,6 +92,8 @@
         </header>
 
         <div class="article_content">
+
+            <img class="blog-image" src="./images/reddit-dask-castra.png">
           
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -108,7 +105,7 @@
 
         <div class="meta">
           <div>
-            <a class="button button-primary button-more" href="./blog/2015/09/03/reddit-comments/">Read</a>
+            <a class="button button-primary button-read" href="./blog/2015/09/03/reddit-comments/">Read</a>
           </div>
 
           <div>
@@ -126,14 +123,16 @@
   <br>
 
      <section class="home-section">
-        <h2 class="home-header">Talks and Tutorials</h2>
+        <h3 class="home-header">Talks and Tutorials</h3>
             <div class="row">
-                          <h5 class="talk-header"><a href="./pages/talks/ep2015-blaze/">Scale your data, not your process. Welcome to the Blaze ecosystem.</a></h5>
-                          <p><b>EuroPython 2015</b>, Christine Doig</p>
-                          <h5 class="talk-header"><a href="./pages/talks/pygotham2015-dask/">Going Parallel and Larger-than-memory with Graphs</a></h5>
-                          <p><b>PyGotham 2015</b>, Blake Griffith</p>
-                          <h5 class="talk-header"><a href="./pages/talks/scipy2015-dask/">Dask Out of core NumPy and Pandas through Task Scheduling</a></h5>
-                          <p><b>SciPy 2015</b>, James Crist</p>
+                <ul>
+                          <li><p class="talk-header"><a href="./pages/talks/ep2015-blaze/">Scale your data, not your process. Welcome to the Blaze ecosystem.</a>
+                          <br><b>EuroPython 2015</b>, Christine Doig</p>    </li>
+                          <li><p class="talk-header"><a href="./pages/talks/pygotham2015-dask/">Going Parallel and Larger-than-memory with Graphs</a>
+                          <br><b>PyGotham 2015</b>, Blake Griffith</p>    </li>
+                          <li><p class="talk-header"><a href="./pages/talks/scipy2015-dask/">Dask Out of core NumPy and Pandas through Task Scheduling</a>
+                          <br><b>SciPy 2015</b>, James Crist</p>    </li>
+                </ul>
             </div>
             <div class="row">
                 <a class="button button-primary button-more" href="./pages/talks">More</a>
