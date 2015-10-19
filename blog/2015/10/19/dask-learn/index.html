@@ -206,10 +206,10 @@ speedup parameter search computations, even without parallelism.</p>
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectFdr</span>
-<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="k">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="k">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">SelectFdr</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">LinearSVC</span>
 
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s">&quot;count&quot;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">()),</span>
                      <span class="p">(</span><span class="s">&quot;select_fdr&quot;</span><span class="p">,</span> <span class="n">SelectFdr</span><span class="p">()),</span>
@@ -251,7 +251,7 @@ speedup parameter search computations, even without parallelism.</p>
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_20newsgroups</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">fetch_20newsgroups</span>
 
 <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s">&#39;alt.atheism&#39;</span><span class="p">,</span>
@@ -282,7 +282,7 @@ speedup parameter search computations, even without parallelism.</p>
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data_train</span><span class="o">.</span><span class="n">target</span>
+<div class=" highlight hl-ipython3"><pre><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data_train</span><span class="o">.</span><span class="n">target</span>
 <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data_test</span><span class="o">.</span><span class="n">target</span>
 </pre></div>
 
@@ -307,7 +307,7 @@ and then score how well our pipeline performs.</p>
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">time</span>
+<div class=" highlight hl-ipython3"><pre><span class="o">%%</span><span class="k">time</span>
 pipeline.fit(X_train, y_train).score(X_test, y_test)
 </pre></div>
 
@@ -355,12 +355,11 @@ Wall time: 581 ms
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Parameter-Searches">Parameter Searches<a class="anchor-link" href="#Parameter-Searches">&#182;</a></h4><p>We can acheive better scores by tuning the parameters of each of the components of
+<h4 id="Parameter-Searches">Parameter Searches<a class="anchor-link" href="#Parameter-Searches">&#182;</a></h4><p>We can achieve better scores by tuning the parameters of each of the components of
 the pipeline.  The default parameters provided by scikit-learn are quite sane but 
 datasets vary and parameter tuning helps.</p>
 <p>So we're going to choose a few parameters in the second and third parts of our pipeline and consider all possible combinations.</p>
-<p>*Disclaimer: to make this problem more explicit we avoid sklearn's <code>GridSearch</code> 
-object and just use a for loop.  Please don't do this in practice.*</p>
+<p><em>Disclaimer: to make this problem more explicit we avoid sklearn's <code>GridSearch</code> object and just use a for loop.  Please don't do this in practice.</em></p>
 
 </div>
 </div>
@@ -370,7 +369,7 @@ object and just use a for loop.  Please don't do this in practice.*</p>
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;select_fdr__alpha&#39;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span> <span class="s">&#39;svm__C&#39;</span><span class="p">:</span> <span class="n">C</span><span class="p">}</span>
               <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
               <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
@@ -386,7 +385,7 @@ object and just use a for loop.  Please don't do this in practice.*</p>
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">time</span>
+<div class=" highlight hl-ipython3"><pre><span class="o">%%</span><span class="k">time</span>
 scores = [pipeline.set_params(**params)
                   .fit(X_train, y_train)
                   .score(X_test, y_test)
@@ -418,7 +417,7 @@ Wall time: 11.9 s
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="p">{</span><span class="s">&#39;best-score&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">),</span> 
+<div class=" highlight hl-ipython3"><pre><span class="p">{</span><span class="s">&#39;best-score&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">),</span> 
  <span class="s">&#39;best-parameters&#39;</span><span class="p">:</span> <span class="n">parameters</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores</span><span class="p">)]}</span>
 </pre></div>
 
@@ -481,8 +480,8 @@ dasklearn: pipeline = pipeline.fit(X, y)
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># from sklearn.pipeline import Pipeline</span>
-<span class="kn">from</span> <span class="nn">dasklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<div class=" highlight hl-ipython3"><pre><span class="c"># from sklearn.pipeline import Pipeline</span>
+<span class="kn">from</span> <span class="nn">dasklearn.pipeline</span> <span class="k">import</span> <span class="n">Pipeline</span>
 
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s">&quot;count&quot;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">()),</span>
                      <span class="p">(</span><span class="s">&quot;select_fdr&quot;</span><span class="p">,</span> <span class="n">SelectFdr</span><span class="p">()),</span>
@@ -510,7 +509,7 @@ The computation isn't very parallelizable.</p>
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">dask.base</span> <span class="kn">import</span> <span class="n">visualize</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">dask.base</span> <span class="k">import</span> <span class="n">visualize</span>
 <span class="n">params1</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">score1</span> <span class="o">=</span> <span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">params1</span><span class="p">)</span>
                   <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
@@ -2765,7 +2764,7 @@ TkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">params2</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span class="n">params2</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 <span class="n">score2</span> <span class="o">=</span> <span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">params2</span><span class="p">)</span>
                   <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
                   <span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
@@ -6241,7 +6240,7 @@ AAAAAAAAAAAAAAAAAAAAw/x/7Lzcv9tD4UEAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -6281,8 +6280,8 @@ AAAAAAAAAAAAAAAAAAAAw/x/7Lzcv9tD4UEAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">dask.imperative</span> <span class="kn">import</span> <span class="n">compute</span>
-<span class="kn">from</span> <span class="nn">dask.async</span> <span class="kn">import</span> <span class="n">get_sync</span>  <span class="c"># no parallelism</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">dask.imperative</span> <span class="k">import</span> <span class="n">compute</span>
+<span class="kn">from</span> <span class="nn">dask.async</span> <span class="k">import</span> <span class="n">get_sync</span>  <span class="c"># no parallelism</span>
 </pre></div>
 
 </div>
@@ -6295,7 +6294,7 @@ AAAAAAAAAAAAAAAAAAAAw/x/7Lzcv9tD4UEAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">time</span>
+<div class=" highlight hl-ipython3"><pre><span class="o">%%</span><span class="k">time</span>
 scores = [pipeline.set_params(**params)
                   .fit(X_train, y_train)
                   .score(X_test, y_test)
@@ -6329,7 +6328,7 @@ Wall time: 1.88 s
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="p">{</span><span class="s">&#39;best-score&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> 
+<div class=" highlight hl-ipython3"><pre><span class="p">{</span><span class="s">&#39;best-score&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> 
  <span class="s">&#39;best-parameters&#39;</span><span class="p">:</span> <span class="n">parameters</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">result</span><span class="p">)]}</span>
 </pre></div>
 
@@ -6371,7 +6370,7 @@ Wall time: 1.88 s
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">time</span>
+<div class=" highlight hl-ipython3"><pre><span class="o">%%</span><span class="k">time</span>
 from dask.imperative import value
 X_train, y_train, X_test, y_test = map(value, [X_train, y_train, X_test, y_test])
 
@@ -6408,7 +6407,7 @@ Wall time: 1.24 s
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">visualize</span><span class="p">(</span><span class="o">*</span><span class="n">scores</span><span class="p">,</span> <span class="n">rankdir</span><span class="o">=</span><span class="s">&#39;LR&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span class="n">visualize</span><span class="p">(</span><span class="o">*</span><span class="n">scores</span><span class="p">,</span> <span class="n">rankdir</span><span class="o">=</span><span class="s">&#39;LR&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -35708,6 +35707,16 @@ AgAAAAAAAACMNXsFAAAAAAAAAGCs/QeLwMLqKs7MsQAAAABJRU5ErkJggg==
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note how the computation is skinny at the left (CountVectorizer side) and wide at the right (output side).  If we were to do this naively then the left side would have just as many computations as the right side.  The tapering on the left visually indicates our gains.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
