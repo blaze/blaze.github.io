@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>The Blaze Ecosystem</title>
+  <meta name="description" content="">
+  <meta name="author" content="Blaze Developers">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:100,200,300,400,600' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../theme/css/normalize.css">
+  <link rel="stylesheet" href="../theme/css/skeleton.css">
+  <link rel="stylesheet" href="../theme/css/custom.css">
+
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../theme/images/favicon.ico">
+
+</head>
+<body class="code-snippets-visible">
+
+    <div class="navbar-spacer"></div>
+    <nav class="navbar">
+      <div class="container">
+        <ul class="navbar-list">
+          <li class="navbar-item"><a class="navbar-link" href="..">Home</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../pages/overview">Overview</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../pages/projects">Projects</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../pages/talks">Talks</a>
+          <!--li class="navbar-item"><a class="navbar-link" href="../pages/examples">Examples</a></li-->
+          <!--li class="navbar-item"><a class="navbar-link" href="../pages/team">Team</a></li-->
+          <li class="navbar-item"><a class="navbar-link" href="../archives">Blog</a></li>
+        </ul>
+        <div>
+            <a class="navbar-link" href="../"><img src="../images/blaze.png" class="site-icon"></a>
+        </div>
+      </div>
+    </nav>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<div class="container">
+    <section class="site-header">
+      <div><img class="header-logo" src="../images/blaze.png"><h2 class="title">The Blaze Ecosystem</h2></div>
+    </section>
+
+    <section class="home-section">
+        <div class="row">
+            <p>The Blaze ecosystem is a set of libraries that help users store, describe,
+            query and process data. It is composed of the following core projects:</p>
+        </div>
+
+        <div class="row">
+          <ul>
+                        <li class="talk-header"><a href="http://blaze.readthedocs.org/en/latest/index.html">Blaze</a>: An interface to query data on different storage systems</li>
+                        <li class="talk-header"><a href="http://dask.readthedocs.org/en/latest/">Dask</a>: Parallel computing through task scheduling and blocked algorithms</li>
+                        <li class="talk-header"><a href="http://datashape.readthedocs.org/en/latest/">Datashape</a>: A data description language</li>
+                        <li class="talk-header"><a href="https://github.com/libdynd/dynd-python">DyND</a>: A C++ library for dynamic, multidimensional arrays</li>
+                        <li class="talk-header"><a href="http://odo.readthedocs.org/en/latest/">Odo</a>: Data migration between different storage systems</li>
+          </ul>
+        </div>
+    </section>
+
+    <section class="home-section">
+      <h3 class="home-header">Recent blog posts</h3>
+      <article class="home-post">
+        <header>
+          <time datetime="" title="2015-10-19T00:00:00+00:00" pubdate style="float:right" class="blogpost-date">Mon 19 October 2015</time>
+          <br>
+          <h5><a href="../blog/2015/10/19/dask-learn/">Pipelines and Reuse with dask</a></h5>
+          <h6>by Matthew Rocklin</h6>
+        </header>
+
+        <div class="article_content">
+
+            <img class="blog-image" src="../images/dasklearn.png">
+          
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>tl;dr: We use <a href="http://dask.pydata.org/en/latest/">dask</a> to accelerate parameter searches over machine learning pipelines by naming consistently.</strong>
+        </div>
+
+        <div class="meta">
+          <div>
+            <a class="button button-primary button-read" href="../blog/2015/10/19/dask-learn/">Read</a>
+          </div>
+
+          <div>
+                <a class="label-default" href="../tag/dask.html">dask</a>
+                <a class="label-default" href="../tag/sklearn.html">sklearn</a>
+                <a class="label-default" href="../tag/dasklearn.html">dasklearn</a>
+          </div>
+
+        </div>
+
+      </article>
+      <div class="separator"></div>
+
+
+  <br>
+
+     <section class="home-section">
+        <h3 class="home-header">Talks and Tutorials</h3>
+            <div class="row">
+                <ul>
+                          <li><p class="talk-header"><a href="../pages/talks/ep2015-blaze/">Scale your data, not your process. Welcome to the Blaze ecosystem.</a>
+                          <br><b>EuroPython 2015</b>, Christine Doig</p>    </li>
+                          <li><p class="talk-header"><a href="../pages/talks/pygotham2015-dask/">Going Parallel and Larger-than-memory with Graphs</a>
+                          <br><b>PyGotham 2015</b>, Blake Griffith</p>    </li>
+                          <li><p class="talk-header"><a href="../pages/talks/scipy2015-dask/">Dask Out of core NumPy and Pandas through Task Scheduling</a>
+                          <br><b>SciPy 2015</b>, James Crist</p>    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <a class="button button-primary button-more" href="../pages/talks">More</a>
+            </div>
+    </section>
+
+</div>
+
+
+<br>
+
+
+<footer class="footer"></footer>
+
+<!-- Google Analytics -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67320551-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
