@@ -105,17 +105,17 @@ local process with the <code>.result()</code> method:</p>
 
 
 <h2>Data Locality</h2>
-<p>However we don't want to move data with the <code>.result</code> method if we can avoid it.</p>
+<p>However, we don't want to do this; moving data from remote workers to the local
+process is expensive.  We avoid calling <code>.result()</code>.</p>
 <p>By default the result of the computation (<code>2</code>) stays on the remote computer
-where the computation occurred.  Data transfer often becomes the bottleneck so
-we avoid calling <code>.result()</code> whenever possible.</p>
-<p>We avoid data transfer by allowing <code>submit</code> calls to directly accept futures as
-arguments:</p>
+where the computation occurred.  We avoid data transfer by allowing <code>submit</code>
+calls to directly accept futures as arguments:</p>
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">inc</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c"># no need to call x.result()</span>
 </pre></div>
 
 
-<p>This deviates from the <code>concurrent.futures</code> API where we would wait on <code>x</code>
+<p>The computation for <code>y</code> will happen on the same machine where <code>x</code> lives.  This
+interface deviates from <code>concurrent.futures</code> where we would have to wait on <code>x</code>
 before submiting <code>y</code>.  We no longer have to do the following:</p>
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">inc</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>  <span class="c"># old concurrent.futures API</span>
 </pre></div>
@@ -130,17 +130,18 @@ which others.  The scheduler takes care of this for us.</li>
 </ol>
 <h2>Ad hoc computations</h2>
 <p>For ad-hoc computations we often want the fine-grained control that a simple
-<code>.submit(func, *args)</code> function provides.  Ad-hoc computations often have
-various function calls that depend on each other in various strange ways; they
-don't fit a particular model or framework.</p>
-<p>We don't need this fine-grained control if we're just parsing JSON and loading
-it into a database.  In this case bulk operations like <code>map</code> and <code>reduce</code>
-provided by MapReduce or Spark are often sufficient.</p>
-<p>However when our computations aren't straightforward and they don't fit nicely
-into a framework then we're stuck performing <code>groupby</code> and <code>join</code> gymnastics
-over strange key naming schemes to coerce our problem into the MapReduce or
-Spark programming model.  If we're not operating at the peta-byte scale then
-these programming models might be overkill.</p>
+and efficient <code>executor.submit(func, *args)</code> function provides.  Ad-hoc
+computations often have various function calls that depend on each other in
+strange ways; they don't fit a particular model or framework.</p>
+<p>We don't need this fine-grained control for typical embarrassingly parallel
+work, like parsing JSON and loading it into a database.  In these typical cases
+the bulk operations like <code>map</code> and <code>reduce</code> provided by MapReduce or Spark fit
+well.</p>
+<p>However when computations aren't straightforward and don't fit nicely into a
+framework then we're stuck performing <code>groupby</code> and <code>join</code> gymnastics over
+strange key naming schemes to coerce our problem into the MapReduce or Spark
+programming models.  If we're not operating at the petabyte scale then these
+programming models might be overkill.</p>
 <p>The <code>.submit</code> function has an overhead of about a millisecond per call (not
 counting network latency).  This might be crippling at the petabyte scale, but
 it's quite convenient and freeing at the medium-data scale.  It lets us use a
@@ -151,13 +152,13 @@ of what's going on.</p>
 arrays.</p>
 <p>This is the kind of algorithm you would find hard-coded into a library like
 <a href="http://spark.apache.org/">Spark</a> or
-<a href="http://dask.pydata.org/en/latest/array.html">dask.array</a>/<a href="http://dask.pydata.org/en/latest/dataframe.html">dataframe</a>
+<a href="http://dask.pydata.org/en/latest/array.html">dask.array</a>/<a href="http://dask.pydata.org/en/latest/dataframe.html">dask.dataframe</a>
 but that we can accomplish by hand with some for loops while still using
 parallel distributed computing.  The difference here is that we're not limited
 to the algorithms chosen for us and can screw around more freely.</p>
 <div class="highlight"><pre>finish           total             single array output
     ^          /        \
-    |        z1          z2
+    |        z1          z2        neighbors merge
     |       /  \        /  \
     |     y1    y2    y3    y4     neighbors merge
     ^    / \   / \   / \   / \
@@ -200,8 +201,8 @@ up and finish small computations this quickly.</p>
 <p>Various other Python frameworks provide distributed function evaluation.  A few
 are listed <a href="http://distributed.readthedocs.org/en/latest/related-work.html">here</a>
 .  Notably we're stepping on the toes of
-<a href="http://scoop.readthedocs.org/en/0.7/">SCOOP</a>, which also provides a
-distributed <code>concurrent.futures</code> interface.</p>
+<a href="http://scoop.readthedocs.org/en/0.7/">SCOOP</a>, an excellent library that also
+provides a distributed <code>concurrent.futures</code> interface.</p>
 <p>The <code>distributed</code> project could use a more distinct name.  Any suggestions?</p>
 <p>For more information see the following links:</p>
 <ul>
