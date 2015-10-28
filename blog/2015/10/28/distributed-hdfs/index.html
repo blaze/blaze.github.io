@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>The Blaze Ecosystem</title>
+  <meta name="description" content="">
+  <meta name="author" content="Blaze Developers">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:100,200,300,400,600' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../../../../../theme/css/normalize.css">
+  <link rel="stylesheet" href="../../../../../theme/css/skeleton.css">
+  <link rel="stylesheet" href="../../../../../theme/css/custom.css">
+  <link rel="stylesheet" href="../../../../../theme/css/pygments.css">
+
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../../../../../theme/images/favicon.ico">
+
+</head>
+<body class="code-snippets-visible">
+
+    <div class="navbar-spacer"></div>
+    <nav class="navbar">
+      <div class="container">
+        <ul class="navbar-list">
+          <li class="navbar-item"><a class="navbar-link" href="../../../../..">Home</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../pages/overview">Overview</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../pages/projects">Projects</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../pages/talks">Talks</a>
+          <!--li class="navbar-item"><a class="navbar-link" href="../../../../../pages/examples">Examples</a></li-->
+          <!--li class="navbar-item"><a class="navbar-link" href="../../../../../pages/team">Team</a></li-->
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../archives">Blog</a></li>
+        </ul>
+        <div>
+            <a class="navbar-link" href="../../../../../"><img src="../../../../../images/blaze.png" class="site-icon"></a>
+        </div>
+      </div>
+    </nav>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="container">
+<section id="content">
+        <article>
+            <p class="article-date">
+                    Wed 28 October 2015
+            </p>
+            <header class="header">
+                <a href="../../../../../blog/2015/10/28/distributed-hdfs/"
+                   rel="bookmark"
+                   title="Permalink to Running PyData on HDFS without the JVM">
+                 <h2 class="blogpost-title">Running PyData on HDFS without the JVM</h2>
+                </a>
+                <h5>by Matthew Rocklin</h5>
+            </header>
+            <div>
+            <h2>Outline</h2>
+<ol>
+<li>Describe HDFS</li>
+<li>Motivate talking directly to datanodes</li>
+<li>Use snakebite to query locations of blocks</li>
+<li>Use distributed to submit jobs directly on those blocks</li>
+<li>Use snakebite+distributed+pandas to process CSV files on HDFS in Pure
+    Python</li>
+</ol>
+<h2>HDFS Summary</h2>
+<p>The Hadoop File System (HDFS) distributes large datasets across many data
+nodes roughly as follows:</p>
+<ol>
+<li>Cut up large files into 64MB blocks (or thereabouts)</li>
+<li>Replicate each block on a few data-nodes (to provide resilience to
+    machine loss)</li>
+<li>Store all block/datanode locations on a central namenode</li>
+</ol>
+<p>Normally we don't think about the internal structure.  We move large files in
+and out via the namenode or we use frameworks like Hadoop and Spark to interact
+with the data blocks on our behalf.  Both Hadoop and Spark are JVM tools though
+and provide somewhat suboptimal Python experiences.</p>
+<h2>Direct Datanode Interaction</h2>
+<p>Efficient computation on data in HDFS requires dealing directly with data nodes.</p>
+<p>When we copy data into or out of HDFS with the <code>hdfs</code> command line utility or
+with WebHDFS (e.g. through Hue) we interact with the master namenode. This
+namenode insulates us from the sea of datanodes that actually hold the data.
+This is great because we get a comprehensive view of the file system without
+having to muck about with the individual blocks.  All of the data flows through
+one, easy-to-understand centralized point, the namenode.</p>
+<p>Unfortunately if we want to compute on the data then we don't want to pull
+everything through the central namenode; we want to work with each block
+directly on one of the data nodes where it currently lives.</p>
+<p>This is what computational systems like Hadoop/Spark/Impala do.  If we want
+efficient data local computation on HDFS then its what we'll have to do too.</p>
+<h2>Query Block Locations with Snakebite</h2>
+<p>We put a dataset on HDFS instance through the command line interface:</p>
+<div class="highlight"><pre><span class="nv">$ </span>hdfs dfs -cp yellow_tripdata_2014-01.csv /data/nyctaxi/
+</pre></div>
+
+
+<p>Then we query the namenode to discover how it sharded this file.</p>
+<p>To avoid JVM dependence we use Spotify's
+<a href="http://snakebite.readthedocs.org/en/latest/">snakebite</a> library which
+includes the protobuf headers necessary to interact with the namenode directly,
+without using the Java HDFS client library.</p>
+<p>The library code within Snakebite doesn't support our desired queries, and so
+we use their protobuf headers to write custom code available
+<a href="https://github.com/mrocklin/distributed/blob/master/distributed/hdfs.py">here</a>
+(work done by <a href="https://github.com/quasiben">Ben Zaitlen</a> and
+<a href="https://github.com/martindurant/">Martin Durant</a>).  We get back a list of
+paths and hosts for each of our blocks.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">hdfs</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">blocks</span> <span class="o">=</span> <span class="n">hdfs</span><span class="o">.</span><span class="n">get_locations</span><span class="p">(</span><span class="s">&#39;/data/nyctaxi/&#39;</span><span class="p">,</span> <span class="s">&#39;192.168.50.100&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">blocks</span>
+<span class="p">[{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac15bb90</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741844&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac15bf50</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741845&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac15d410</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741846&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac15d848</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741847&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac15dc80</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741848&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac16b140</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741849&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac16b578</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.105&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741850&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac16b9b0</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741851&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac16bde8</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741852&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac1772a8</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.101&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741853&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac1776e0</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.105&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741854&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac177b18</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.101&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741855&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac177f50</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741856&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac105410</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741857&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac105848</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741858&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac105c80</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.101&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741859&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac113140</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.106&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.107&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741860&#39;</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">&#39;block&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snakebite</span><span class="o">.</span><span class="n">protobuf</span><span class="o">.</span><span class="n">hdfs_pb2</span><span class="o">.</span><span class="n">LocatedBlockProto</span> <span class="n">at</span> <span class="mh">0x7f56ac113578</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;192.168.50.101&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.105&#39;</span><span class="p">,</span> <span class="s">u&#39;192.168.50.106&#39;</span><span class="p">],</span>
+  <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/data/dfs/dn/current/BP-1962702953-127.0.1.1-1445557266071/current/finalized/subdir0/subdir0/blk_1073741861&#39;</span><span class="p">}]</span>
+</pre></div>
+
+
+<p>HDFS cut up our large single file, <code>yellow_tripdata_2014-01.csv</code>, into many
+small files/blocks.  HDFS replicates each block across three machines.  For
+each block we see the three machines in the <code>'hosts'</code> value and we see where on
+those machines' local file systems we can find the actual block.   We inspect
+the first of these blocks manually by <code>ssh</code>ing into one of the the listed hosts
+and inspecing that host's local file system.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">ssh</span> <span class="n">hdfs</span><span class="mf">@192.168.50.106</span>
+<span class="n">hdfs</span><span class="p">@</span><span class="nl">compute3</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vagrant</span><span class="err">$</span> <span class="n">head</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">dfs</span><span class="o">/</span><span class="n">dn</span><span class="o">/</span><span class="n">current</span><span class="o">/</span><span class="n">BP</span><span class="o">-</span><span class="mi">1962702953</span><span class="o">-</span><span class="mf">127.0.1.1</span><span class="o">-</span><span class="mi">1445557266071</span><span class="o">/</span><span class="n">current</span><span class="o">/</span><span class="n">finalized</span><span class="o">/</span><span class="n">subdir0</span><span class="o">/</span><span class="n">subdir0</span><span class="o">/</span><span class="n">blk_1073741844</span><span class="err">&#39;</span><span class="p">},</span>
+<span class="n">vendor_id</span><span class="p">,</span> <span class="n">pickup_datetime</span><span class="p">,</span> <span class="n">dropoff_datetime</span><span class="p">,</span> <span class="n">passenger_count</span><span class="p">,</span> <span class="n">trip_distance</span><span class="p">,</span> <span class="n">pickup_longitude</span><span class="p">,</span> <span class="n">pickup_latitude</span><span class="p">,</span> <span class="n">rate_code</span><span class="p">,</span> <span class="n">store_and_fwd_flag</span><span class="p">,</span> <span class="n">dropoff_longitude</span><span class="p">,</span> <span class="n">dropoff_latitude</span><span class="p">,</span> <span class="n">payment_type</span><span class="p">,</span> <span class="n">fare_amount</span><span class="p">,</span> <span class="n">surcharge</span><span class="p">,</span> <span class="n">mta_tax</span><span class="p">,</span> <span class="n">tip_amount</span><span class="p">,</span> <span class="n">tolls_amount</span><span class="p">,</span> <span class="n">total_amount</span>
+
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span><span class="mi">25</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">52</span><span class="o">:</span><span class="mi">31</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.69999999999999996</span><span class="p">,</span><span class="o">-</span><span class="mf">73.994770000000003</span><span class="p">,</span><span class="mf">40.736828000000003</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.982226999999995</span><span class="p">,</span><span class="mf">40.731789999999997</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mf">6.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.3999999999999999</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">8.9000000000000004</span>
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">46</span><span class="o">:</span><span class="mi">12</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">12</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.3999999999999999</span><span class="p">,</span><span class="o">-</span><span class="mf">73.982392000000004</span><span class="p">,</span><span class="mf">40.773381999999998</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.960448999999997</span><span class="p">,</span><span class="mf">40.763995000000001</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mf">8.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.8999999999999999</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">11.4</span>
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">44</span><span class="o">:</span><span class="mi">47</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">59</span><span class="o">:</span><span class="mi">46</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">2.2999999999999998</span><span class="p">,</span><span class="o">-</span><span class="mf">73.988569999999996</span><span class="p">,</span><span class="mf">40.739406000000002</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.986626000000001</span><span class="p">,</span><span class="mf">40.765217</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mf">11.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">14</span>
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">44</span><span class="o">:</span><span class="mi">57</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span><span class="mi">40</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.7</span><span class="p">,</span><span class="o">-</span><span class="mf">73.960212999999996</span><span class="p">,</span><span class="mf">40.770463999999997</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.979862999999995</span><span class="p">,</span><span class="mf">40.777050000000003</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.7</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">10.199999999999999</span>
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">47</span><span class="o">:</span><span class="mi">09</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">53</span><span class="o">:</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.90000000000000002</span><span class="p">,</span><span class="o">-</span><span class="mf">73.995371000000006</span><span class="p">,</span><span class="mf">40.717247999999998</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.984367000000006</span><span class="p">,</span><span class="mf">40.720523999999997</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.75</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">8.75</span>
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span><span class="mo">07</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span><span class="mo">01</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.90000000000000002</span><span class="p">,</span><span class="o">-</span><span class="mf">73.983811000000003</span><span class="p">,</span><span class="mf">40.749654999999997</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.989746999999994</span><span class="p">,</span><span class="mf">40.756574999999998</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.3999999999999999</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">8.4000000000000004</span>
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">44</span><span class="o">:</span><span class="mo">04</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">21</span><span class="o">:</span><span class="mo">05</span><span class="o">:</span><span class="mi">45</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">3.6000000000000001</span><span class="p">,</span><span class="o">-</span><span class="mf">73.984138000000002</span><span class="p">,</span><span class="mf">40.726317000000002</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.962868999999998</span><span class="p">,</span><span class="mf">40.758443</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mf">16.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">5.25</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">22.75</span>
+<span class="n">CMT</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">43</span><span class="o">:</span><span class="mi">23</span><span class="p">,</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">20</span><span class="o">:</span><span class="mi">52</span><span class="o">:</span><span class="mo">07</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.1000000000000001</span><span class="p">,</span><span class="o">-</span><span class="mf">73.979906</span><span class="p">,</span><span class="mf">40.745849999999997</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="o">-</span><span class="mf">73.959090000000003</span><span class="p">,</span><span class="mf">40.773639000000003</span><span class="p">,</span><span class="n">CRD</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">12</span>
+</pre></div>
+
+
+<p>Once we have block locations on the host file system we ditch HDFS and just
+think about remote hosts that have files on their local file systems.  HDFS has
+played its part and can exit the stage.</p>
+<h2>Data-local tasks with distributed</h2>
+<p>We load these blocks with <code>pandas</code> and <code>distributed</code>.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;vendor_id&#39;</span><span class="p">,</span> <span class="s">&#39;pickup_datetime&#39;</span><span class="p">,</span> <span class="s">&#39;dropoff_datetime&#39;</span><span class="p">,</span>
+ <span class="s">&#39;passenger_count&#39;</span><span class="p">,</span> <span class="s">&#39;trip_distance&#39;</span><span class="p">,</span> <span class="s">&#39;pickup_longitude&#39;</span><span class="p">,</span> <span class="s">&#39;pickup_latitude&#39;</span><span class="p">,</span>
+ <span class="s">&#39;rate_code&#39;</span><span class="p">,</span> <span class="s">&#39;store_and_fwd_flag&#39;</span><span class="p">,</span> <span class="s">&#39;dropoff_longitude&#39;</span><span class="p">,</span> <span class="s">&#39;dropoff_latitude&#39;</span><span class="p">,</span>
+ <span class="s">&#39;payment_type&#39;</span><span class="p">,</span> <span class="s">&#39;fare_amount&#39;</span><span class="p">,</span> <span class="s">&#39;surcharge&#39;</span><span class="p">,</span> <span class="s">&#39;mta_tax&#39;</span><span class="p">,</span> <span class="s">&#39;tip_amount&#39;</span><span class="p">,</span>
+ <span class="s">&#39;tolls_amount&#39;</span><span class="p">,</span> <span class="s">&#39;total_amount&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Executor</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">Executor</span><span class="p">(</span><span class="s">&#39;192.168.1.100:8787&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dfs</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="n">block</span><span class="p">[</span><span class="s">&#39;path&#39;</span><span class="p">],</span> <span class="n">workers</span><span class="o">=</span><span class="n">block</span><span class="p">[</span><span class="s">&#39;hosts&#39;</span><span class="p">],</span>
+<span class="o">...</span>                        <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">...</span>        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">]</span>
+</pre></div>
+
+
+<p>We use the <code>workers=</code> keyword argument to <code>Executor.submit</code> to restrict these
+jobs so that they can only run on the hosts whose local file systems actually
+hold these paths.  Also, because only the first block will have the CSV header
+we provide keyword arguments directly to the <code>pd.read_csv</code> call.</p>
+<p>Or alternatively we've wrapped up both steps into a little convenience function:</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">hdfs</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dfs</span> <span class="o">=</span> <span class="n">hdfs</span><span class="o">.</span><span class="n">map_blocks</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="s">&#39;/data/nyctaxi/&#39;</span><span class="p">,</span>
+<span class="o">...</span>                       <span class="s">&#39;192.168.50.100&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">,</span>
+<span class="o">...</span>                       <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>Some simple analysis</h2>
+<p>We now do some simple work, counting all of the passenger counts values.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">sum_series</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">passenger_count</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span> <span class="n">dfs</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">total</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">sum_series</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">total</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="mi">0</span>          <span class="mi">259</span>
+<span class="mi">1</span>      <span class="mi">9727301</span>
+<span class="mi">2</span>      <span class="mi">1891581</span>
+<span class="mi">3</span>       <span class="mi">566248</span>
+<span class="mi">4</span>       <span class="mi">267540</span>
+<span class="mi">5</span>       <span class="mi">789070</span>
+<span class="mi">6</span>       <span class="mi">540444</span>
+<span class="mi">7</span>            <span class="mi">7</span>
+<span class="mi">8</span>            <span class="mi">5</span>
+<span class="mi">9</span>           <span class="mi">16</span>
+<span class="mi">208</span>         <span class="mi">19</span>
+</pre></div>
+
+
+<p>Looking at these results we see that as is expected, most rides have a single
+passenger.  There are a few oddities like many rides with zero passengers, a
+ride with 208 passengers, and an unexpected spike at five passengers.</p>
+<h2>Conclusion</h2>
+<p>We used <code>snakebite</code>'s protobuf definitions and <code>distributed</code>'s data-local task
+scheduling to run Pandas directly on CSV data in HDFS.  We didn't touch the
+JVM.  We didn't invent a new framework.  Instead we reused existing components
+in the PyData ecosystem to handle biggish data on HDFS with only Python
+projects.</p>
+<p>Our approach wasn't elegant or streamlined but it also wasn't complex.  None of
+<code>snakebite</code>, <code>distributed</code>, nor <code>pandas</code> was designed for this use case and yet
+we composed them together to achieve something that was previously only
+possible through large monolithic frameworks foreign to Python.  HDFS no longer
+feels like "big data magic"; it's just a way that big files get split up into
+small files on many machines that we need to track down to run our normal
+tool-set.</p>
+<p>That's not to disparage the use of monolithic frameworks or elegant streamlined
+approaches.  If enough people care about this sort of thing then I may hook up
+<a href="https://dask.pydata.org/en/latest/dataframe.html">dask.dataframe</a> to this in
+the near future.</p>
+<h2>Questions</h2>
+<p>I'm pretty ignorant when it comes to the JVM HDFS stack.  It'd be great to find
+some people out there who are interested by the approach above and knowledgeable
+in Hadoop internals that are willing to provide guidance.</p>
+<ul>
+<li>Are we going down the right path using snakebite/protobufs to interact with
+   the namenode?  Should we be doing something else?  <code>libhdfs</code> or <code>webhdfs</code>
+   maybe?</li>
+<li>What about writing blocks to HDFS?  Is there a non-JVM approach to this?</li>
+<li>Is there some danger in sidestepping HDFS in this manner?</li>
+<li>Are we making any dumb assumptions in the protobuf code
+   <a href="https://github.com/mrocklin/distributed/blob/master/distributed/hdfs.py">here</a>?</li>
+</ul>
+
+    <section class="comments" id="comments">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'blaze-ecosystem'; // required: replace example with your forum shortname
+            var disqus_identifier = 'distributed-hdfs';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        <div style="margin-bottom:20px"></div>
+    </section>
+            </div>
+
+            <div class="article-info">
+
+<div class="article-info">
+
+
+
+<span><b>Publication date:</b> Wed 28 October 2015</span>
+<br>
+<br>
+</div>            </div>
+            <!-- /.entry-content -->
+
+        </article>
+
+        <ul class="pager">
+        </ul>
+</section>
+
+</div>
+
+<br>
+
+
+<footer class="footer"></footer>
+
+<!-- Google Analytics -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67320551-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
