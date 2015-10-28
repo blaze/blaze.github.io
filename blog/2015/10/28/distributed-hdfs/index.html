@@ -237,6 +237,11 @@ we provide keyword arguments directly to the <code>pd.read_csv</code> call.</p>
 </pre></div>
 
 
+<p>As a reminder from
+<a href="http://blaze.pydata.org/blog/2015/10/27/distributed-ad-hoc/">last time</a> these
+operations produce <code>Future</code> objects that point to remote results on the worker
+computers.  This does not pull results back to local memory.  We can use these
+futures in future computations with the executor.</p>
 <h2>Some simple analysis</h2>
 <p>We now do some simple work, counting all of the passenger counts values.</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">sum_series</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
@@ -262,9 +267,9 @@ we provide keyword arguments directly to the <code>pd.read_csv</code> call.</p>
 </pre></div>
 
 
-<p>Looking at these results we see that as is expected, most rides have a single
-passenger.  There are a few oddities like many rides with zero passengers, a
-ride with 208 passengers, and an unexpected spike at five passengers.</p>
+<p>Looking at these results we see that as expected, most rides have a single
+passenger.  There are also a few oddities like many rides with zero passengers,
+a ride with 208 passengers, and an unexpected spike at five passengers.</p>
 <h2>Conclusion</h2>
 <p>We used <code>snakebite</code>'s protobuf definitions and <code>distributed</code>'s data-local task
 scheduling to run Pandas directly on CSV data in HDFS.  We didn't touch the
