@@ -209,9 +209,9 @@ and inspecing that host's local file system.</p>
 <p>Once we have block locations on the host file system we ditch HDFS and just
 think about remote hosts that have files on their local file systems.  HDFS has
 played its part and can exit the stage.</p>
-<p><em>Note: since writing this we've found a <a href="http://jvns.ca/blog/2014/05/15/diving-into-hdfs/">wonderful article by Julia
-Evans</a>, that describes a
-similar process.  It's worth a read.</em></p>
+<p><em>Note: since writing this we've found a
+<a href="http://jvns.ca/blog/2014/05/15/diving-into-hdfs/">wonderful article</a> by
+<a href="http://jvns.ca/">Julia Evans</a>, that describes a similar process.</em></p>
 <h2>Data-local tasks with distributed</h2>
 <p>We load these blocks with <code>pandas</code> and <code>distributed</code>.</p>
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;vendor_id&#39;</span><span class="p">,</span> <span class="s">&#39;pickup_datetime&#39;</span><span class="p">,</span> <span class="s">&#39;dropoff_datetime&#39;</span><span class="p">,</span>
