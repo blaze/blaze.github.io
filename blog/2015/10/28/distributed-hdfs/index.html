@@ -209,6 +209,9 @@ and inspecing that host's local file system.</p>
 <p>Once we have block locations on the host file system we ditch HDFS and just
 think about remote hosts that have files on their local file systems.  HDFS has
 played its part and can exit the stage.</p>
+<p><em>Note: since writing this we've found a <a href="http://jvns.ca/blog/2014/05/15/diving-into-hdfs/">wonderful article by Julia
+Evans</a>, that describes a
+similar process.  It's worth a read.</em></p>
 <h2>Data-local tasks with distributed</h2>
 <p>We load these blocks with <code>pandas</code> and <code>distributed</code>.</p>
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;vendor_id&#39;</span><span class="p">,</span> <span class="s">&#39;pickup_datetime&#39;</span><span class="p">,</span> <span class="s">&#39;dropoff_datetime&#39;</span><span class="p">,</span>
@@ -272,7 +275,7 @@ passenger.  There are also a few oddities like many rides with zero passengers,
 a ride with 208 passengers, and an unexpected spike at five passengers.</p>
 <h2>Conclusion</h2>
 <p>We used <code>snakebite</code>'s protobuf definitions and <code>distributed</code>'s data-local task
-scheduling to run Pandas directly on CSV data in HDFS.  We didn't touch the
+scheduling to run <code>pandas</code> directly on CSV data in <code>HDFS</code>.  We didn't touch the
 JVM.  We didn't invent a new framework.  Instead we reused existing components
 in the PyData ecosystem to handle biggish data on HDFS with only Python
 projects.</p>
