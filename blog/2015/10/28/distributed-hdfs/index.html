@@ -73,14 +73,14 @@
                 <h5>by Matthew Rocklin</h5>
             </header>
             <div>
-            <h2>Outline</h2>
+            <h2>tl;dr</h2>
 <ol>
-<li>Describe HDFS</li>
-<li>Motivate talking directly to datanodes</li>
-<li>Use snakebite to query locations of blocks</li>
-<li>Use distributed to submit jobs directly on those blocks</li>
-<li>Use snakebite+distributed+pandas to process CSV files on HDFS in Pure
-    Python</li>
+<li>HDFS splits large files into many small blocks replicated on many datanodes</li>
+<li>For efficient computation we must use data directly on datanodes</li>
+<li><code>snakebite</code> queries the locations of the individual blocks</li>
+<li><code>distributed</code> executes functions directly on those blocks on the datanodes</li>
+<li><code>snakebite</code>+<code>distributed</code>+<code>pandas</code> enables distributed CSV processing
+     on HDFS in Pure Python</li>
 </ol>
 <h2>HDFS Summary</h2>
 <p>The Hadoop File System (HDFS) distributes large datasets across many data
