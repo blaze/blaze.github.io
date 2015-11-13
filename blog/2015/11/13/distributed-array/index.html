@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>The Blaze Ecosystem</title>
+  <meta name="description" content="">
+  <meta name="author" content="Blaze Developers">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:100,200,300,400,600' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../../../../../theme/css/normalize.css">
+  <link rel="stylesheet" href="../../../../../theme/css/skeleton.css">
+  <link rel="stylesheet" href="../../../../../theme/css/custom.css">
+  <link rel="stylesheet" href="../../../../../theme/css/pygments.css">
+
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../../../../../theme/images/favicon.ico">
+
+</head>
+<body class="code-snippets-visible">
+
+    <div class="navbar-spacer"></div>
+    <nav class="navbar">
+      <div class="container">
+        <ul class="navbar-list">
+          <li class="navbar-item"><a class="navbar-link" href="../../../../..">Home</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../pages/overview">Overview</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../pages/projects">Projects</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../pages/talks">Talks</a>
+          <!--li class="navbar-item"><a class="navbar-link" href="../../../../../pages/examples">Examples</a></li-->
+          <!--li class="navbar-item"><a class="navbar-link" href="../../../../../pages/team">Team</a></li-->
+          <li class="navbar-item"><a class="navbar-link" href="../../../../../archives">Blog</a></li>
+        </ul>
+        <div>
+            <a class="navbar-link" href="../../../../../"><img src="../../../../../images/blaze.png" class="site-icon"></a>
+        </div>
+      </div>
+    </nav>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="container">
+<section id="content">
+        <article>
+            <p class="article-date">
+                    Fri 13 November 2015
+            </p>
+            <header class="header">
+                <a href="../../../../../blog/2015/11/13/distributed-array/"
+                   rel="bookmark"
+                   title="Permalink to Distributed Array Experiment">
+                 <h2 class="blogpost-title">Distributed Array Experiment</h2>
+                </a>
+                <h5>by Matthew Rocklin</h5>
+            </header>
+            <div>
+            <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/.ansibold{font-weight:bold}.ansiblack{color:black}.ansired{color:darkred}.ansigreen{color:darkgreen}.ansiyellow{color:#c4a000}.ansiblue{color:darkblue}.ansipurple{color:darkviolet}.ansicyan{color:steelblue}.ansigray{color:gray}.ansibgblack{background-color:black}.ansibgred{background-color:red}.ansibggreen{background-color:green}.ansibgyellow{background-color:yellow}.ansibgblue{background-color:blue}.ansibgpurple{background-color:magenta}.ansibgcyan{background-color:cyan}.ansibggray{background-color:gray}div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;border-radius:2px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;border-width:thin;border-style:solid;width:100%;padding:5px;margin:0;outline:none}div.cell.selected{border-color:#ababab}@media print{div.cell.selected{border-color:transparent}}.edit_mode div.cell.selected{border-color:green}@media print{.edit_mode div.cell.selected{border-color:transparent}}.prompt{min-width:14ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}@media (max-width:540px){.prompt{text-align:left}}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}@-moz-document url-prefix(){div.inner_cell{overflow-x:hidden}}div.input_area{border:1px solid #cfcfcf;border-radius:2px;background:#f7f7f7;line-height:1.21429em}div.prompt:empty{padding-top:0;padding-bottom:0}div.unrecognized_cell{padding:5px 5px 5px 0;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}div.unrecognized_cell .inner_cell{border-radius:2px;padding:5px;font-weight:bold;color:red;border:1px solid #cfcfcf;background:#eaeaea}div.unrecognized_cell .inner_cell a{color:inherit;text-decoration:none}div.unrecognized_cell .inner_cell a:hover{color:inherit;text-decoration:none}@media (max-width:540px){div.unrecognized_cell>div.prompt{display:none}}@media print{div.code_cell{page-break-inside:avoid}}div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}@media (max-width:540px){div.input{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}}div.input_prompt{color:navy;border-top:1px solid transparent}div.input_area>div.highlight{margin:.4em;border:none;padding:0;background-color:transparent}div.input_area>div.highlight>pre{margin:0;border:none;padding:0;background-color:transparent}.CodeMirror{line-height:1.21429em;font-size:14px;height:auto;background:none}.CodeMirror-scroll{overflow-y:hidden;overflow-x:auto}.CodeMirror-lines{padding:.4em}.CodeMirror-linenumber{padding:0 8px 0 4px}.CodeMirror-gutters{border-bottom-left-radius:2px;border-top-left-radius:2px}.CodeMirror pre{padding:0;border:0;border-radius:0}.highlight-base{}.highlight-variable{}.highlight-variable-2{color:#1a1a1a}.highlight-variable-3{color:#333}.highlight-string{color:#ba2121}.highlight-comment{color:#408080;font-style:italic}.highlight-number{80}.highlight-atom{color:#88f}.highlight-keyword{8000;font-weight:bold}.highlight-builtin{8000}.highlight-error{color:#f00}.highlight-operator{color:#a2f;font-weight:bold}.highlight-meta{color:#a2f}.highlight-def{f}.highlight-string-2{color:#f50}.highlight-qualifier{color:#555}.highlight-bracket{color:#997}.highlight-tag{color:#170}.highlight-attribute{c}.highlight-header{color:blue}.highlight-quote{90}.highlight-link{c}.cm-s-ipython span.cm-keyword{8000;font-weight:bold}.cm-s-ipython span.cm-atom{color:#88f}.cm-s-ipython span.cm-number{80}.cm-s-ipython span.cm-def{f}.cm-s-ipython span.cm-variable{}.cm-s-ipython span.cm-operator{color:#a2f;font-weight:bold}.cm-s-ipython span.cm-variable-2{color:#1a1a1a}.cm-s-ipython span.cm-variable-3{color:#333}.cm-s-ipython span.cm-comment{color:#408080;font-style:italic}.cm-s-ipython span.cm-string{color:#ba2121}.cm-s-ipython span.cm-string-2{color:#f50}.cm-s-ipython span.cm-meta{color:#a2f}.cm-s-ipython span.cm-qualifier{color:#555}.cm-s-ipython span.cm-builtin{8000}.cm-s-ipython span.cm-bracket{color:#997}.cm-s-ipython span.cm-tag{color:#170}.cm-s-ipython span.cm-attribute{c}.cm-s-ipython span.cm-header{color:blue}.cm-s-ipython span.cm-quote{90}.cm-s-ipython span.cm-link{c}.cm-s-ipython span.cm-error{color:#f00}.cm-s-ipython span.cm-tab{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);background-position:right;background-repeat:no-repeat}div.output_wrapper{position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;z-index:1}div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:2px;-webkit-box-shadow:inset 0 2px 8px rgba(0,0,0,0.8);box-shadow:inset 0 2px 8px rgba(0,0,0,0.8);display:block}div.output_collapsed{margin:0;padding:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.out_prompt_overlay{height:100%;padding:0 .4em;position:absolute;border-radius:2px}div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000;box-shadow:inset 0 0 1px #000;background:rgba(240,240,240,0.5)}div.output_prompt{color:darkred}div.output_area{padding:0;page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}div.output_area .MathJax_Display{text-align:left !important}div.output_area div.output_area div.output_area img,div.output_area svg{max-width:100%;height:auto}div.output_area img.unconfined,div.output_area svg.unconfined{max-width:none}.output{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}@media (max-width:540px){div.output_area{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}}div.output_area pre{margin:0;padding:0;border:0;vertical-align:baseline;color:black;background-color:transparent;border-radius:0}div.output_subarea{overflow-x:auto;padding:.4em;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1;max-width:calc(100% - 14ex)}div.output_text{text-align:left;line-height:1.21429em}div.output_stderr{background:#fdd}div.output_latex{text-align:left}div.output_javascript:empty{padding:0}.js-error{color:darkred}div.raw_input_container{font-family:monospace;padding-top:5px}input.raw_input{font-family:inherit;font-size:inherit;color:inherit;width:auto;vertical-align:baseline;padding:0 .25em;margin:0 .25em}input.raw_input:focus{box-shadow:none}p.p-space{margin-bottom:10px}div.output_unrecognized{padding:5px;font-weight:bold;color:red}div.output_unrecognized a{color:inherit;text-decoration:none}div.output_unrecognized a:hover{color:inherit;text-decoration:none}.rendered_html{}.rendered_html :link{text-decoration:underline}.rendered_html :visited{text-decoration:underline}.rendered_html h1:first-child{margin-top:.538em}.rendered_html h2:first-child{margin-top:.636em}.rendered_html h3:first-child{margin-top:.777em}.rendered_html h4:first-child{margin-top:1em}.rendered_html h5:first-child{margin-top:1em}.rendered_html h6:first-child{margin-top:1em}.rendered_html *+ul{margin-top:1em}.rendered_html *+ol{margin-top:1em}.rendered_html *+table{margin-top:1em}.rendered_html *+p{margin-top:1em}.rendered_html *+img{margin-top:1em}div.text_cell{display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}@media (max-width:540px){div.text_cell>div.prompt{display:none}}div.text_cell_render{outline:none;resize:none;width:inherit;border-style:none;padding:.5em .5em .5em .4em;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}a.anchor-link:link{text-decoration:none;padding:0 20px;visibility:hidden}h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible}.text_cell.rendered .input_area{display:none}.text_cell.rendered .text_cell.unrendered .text_cell_render{display:none}.cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4,.cm-header-5,.cm-header-6{font-weight:bold;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}.cm-header-1{font-size:185.7%}.cm-header-2{font-size:157.1%}.cm-header-3{font-size:128.6%}.cm-header-4{font-size:110%}.cm-header-5{font-size:100%;font-style:italic}.cm-header-6{font-size:100%;font-style:italic}.widget-interact>div,.widget-interact>input{padding:2.5px}.widget-area{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}.widget-area .widget-subarea{padding:.44em .4em .4em 1px;margin-left:6px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:2;-moz-box-flex:2;box-flex:2;flex:2;-webkit-box-align:start;-moz-box-align:start;box-align:start;align-items:flex-start}.widget-area.connection-problems .prompt:after{content:"\f127";font-family:'FontAwesome';color:#d9534f;font-size:14px;top:3px;padding:3px}.slide-track{border:1px solid #ccc;background:#fff;border-radius:2px}.widget-hslider{padding-left:8px;padding-right:2px;overflow:visible;width:350px;height:5px;max-height:5px;margin-top:13px;margin-bottom:10px;border:1px solid #ccc;background:#fff;border-radius:2px;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}.widget-hslider .ui-slider{border:0;background:none;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}.widget-hslider .ui-slider .ui-slider-handle{width:12px;height:28px;margin-top:-8px;border-radius:2px}.widget-hslider .ui-slider .ui-slider-range{height:12px;margin-top:-4px;background:#eee}.widget-vslider{padding-bottom:5px;overflow:visible;width:5px;max-width:5px;height:250px;margin-left:12px;border:1px solid #ccc;background:#fff;border-radius:2px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}.widget-vslider .ui-slider{border:0;background:none;margin-left:-4px;margin-top:5px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}.widget-vslider .ui-slider .ui-slider-handle{width:28px;height:12px;margin-left:-9px;border-radius:2px}.widget-vslider .ui-slider .ui-slider-range{width:12px;margin-left:-1px;background:#eee}.widget-text{width:350px;margin:0}.widget-listbox{width:350px;margin-bottom:0}.widget-numeric-text{width:150px;margin:0}.widget-progress{margin-top:6px;min-width:350px}.widget-progress .progress-bar{-webkit-transition:none;-moz-transition:none;-ms-transition:none;-o-transition:none;transition:none}.widget-combo-btn{min-width:125px}.widget_item .dropdown-menu li a{color:inherit}.widget-hbox{display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}.widget-hbox input[type="checkbox"]{margin-top:9px;margin-bottom:10px}.widget-hbox .widget-label{min-width:10ex;padding-right:8px;padding-top:5px;text-align:right;vertical-align:text-top}.widget-hbox .widget-readout{padding-left:8px;padding-top:5px;text-align:left;vertical-align:text-top}.widget-vbox{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}.widget-vbox .widget-label{padding-bottom:5px;text-align:center;vertical-align:text-bottom}.widget-vbox .widget-readout{padding-top:5px;text-align:center;vertical-align:text-top}.widget-box{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-webkit-box-align:start;-moz-box-align:start;box-align:start;align-items:flex-start}.widget-radio-box{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;padding-top:4px}.widget-radio-box label{margin-top:0;margin-left:20px}</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Distributed-Arrays">Distributed Arrays<a class="anchor-link" href="#Distributed-Arrays">&#182;</a></h2><p>We use <a href="http://dask.pydata.org/en/latest/array.html"><code>dask.array</code></a>, a small cluster on EC2, and <a href="http://distributed.readthedocs.org/en/latest/"><code>distributed</code></a> together to manipulate large nd-arrays in memory.</p>
+<p>This is a writeup of a preliminary experiment and nothing to get excited about.  We'll mostly talk about things that are broken, not about fancy things that solve the world's problems.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Setup:-Download-data-from-ECMWF">Setup: Download data from ECMWF<a class="anchor-link" href="#Setup:-Download-data-from-ECMWF">&#182;</a></h3><p>I've used data from the <a href="http://www.ecmwf.int/">European Center for Meteorological Weather Forecasting</a> before in <a href="http://matthewrocklin.com/blog/work/2015/02/13/Towards-OOC-Slicing-and-Stacking/">this blogpost about dask.array</a>.  Previously we've interacted with large volumes of data using a single laptop by streaming data from disk.  Now we dump all of the data into distributed memory.  This has some advantages and some drawbacks.</p>
+<p>ECMWF only has about 1MB/s upload bandwidth, so this takes a while.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">download</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>import pandas as pd
+dates = pd.date_range(&apos;2014-01-01&apos;, &apos;2014-12-31&apos;, freq=&apos;D&apos;)
+dates = [str(d).split()[0] for d in dates]
+
+from ecmwfapi import ECMWFDataServer
+
+server = ECMWFDataServer()
+
+for date in dates:
+    server.retrieve({
+      &apos;stream&apos;    : &quot;oper&quot;,
+      &apos;levtype&apos;   : &quot;sfc&quot;,
+      &apos;param&apos;     : &quot;165.128/166.128/167.128&quot;,
+      &apos;dataset&apos;   : &quot;interim&quot;,
+      &apos;step&apos;      : &quot;00&quot;,
+      &apos;grid&apos;      : &quot;0.25/0.25&quot;,
+      &apos;time&apos;      : &quot;00/06/12/18&quot;,
+      &apos;date&apos;      : date,
+      &apos;type&apos;      : &quot;an&quot;,
+      &apos;class&apos;     : &quot;ei&quot;,
+      &apos;target&apos;    : date + &quot;.nc&quot;,
+      &apos;format&apos;    : &quot;netcdf&quot; })
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Connect-to-distributed-workers">Connect to distributed workers<a class="anchor-link" href="#Connect-to-distributed-workers">&#182;</a></h3><p>I've set up a small cluster on EC2 using <a href="http://docs.continuum.io/anaconda-cluster/index">anaconda cluster</a> and the following profile.</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">medium</span>
+<span class="l-Scalar-Plain">node_id</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ami-08faa660</span>
+<span class="l-Scalar-Plain">node_type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">m3.2xlarge</span>
+<span class="l-Scalar-Plain">num_nodes</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5</span>
+<span class="l-Scalar-Plain">provider</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">aws_east</span>
+<span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ubuntu</span>
+<span class="l-Scalar-Plain">plugins</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">notebook</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">distributed</span>
+</pre></div>
+<p>Note that anaconda cluster is now happy to setup a <code>distributed</code> network for me, thanks to nice work by <a href="http://danielfrg.com/">Daniel Rodriguez</a>.  If you want to repeat this experiment on your own without <code>acluster</code> don't worry, distributed is simple to <a href="http://distributed.readthedocs.org/en/latest/setup.html">set up</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">distributed.client</span> <span class="kn">import</span> <span class="n">clear</span>
+<span class="n">clear</span><span class="p">(</span><span class="s">&#39;54.172.83.119:8787&#39;</span><span class="p">)</span>  <span class="c"># clean up any old data lying around</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Executor</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">Executor</span><span class="p">(</span><span class="s">&#39;54.172.83.119:8787&#39;</span><span class="p">)</span>  <span class="c"># connect to cluster&#39;s center node</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">e</span><span class="o">.</span><span class="n">ncores</span>  <span class="c"># track number of workers</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{(&apos;172.31.8.61&apos;, 8788): 8,
+ (&apos;172.31.8.62&apos;, 8788): 8,
+ (&apos;172.31.8.63&apos;, 8788): 8,
+ (&apos;172.31.8.64&apos;, 8788): 8}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So we have four machines, each with eight cores and 30GB of memory.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Scatter-arrays-from-head-node-to-workers&#x27;-memory">Scatter arrays from head node to workers' memory<a class="anchor-link" href="#Scatter-arrays-from-head-node-to-workers&#x27;-memory">&#182;</a></h3><p>We've downloaded the ECMWF data onto the head node of our cluster as NetCDF files.  We iteratively load these from disk to local memory and then scatter them throughout the memory of the the worker nodes of the cluster.</p>
+<p>This is our first major problem; it would be much nicer if this data was stored in a distributed format so that we could read from all of our hard drives, rather than just the hard drive on the head node.</p>
+<p>Sadly there is no commonly accepted standard on how to do this.  Common approaches include the following:</p>
+<ol>
+<li>Store data on a storage node, pull from that disk and scatter out to the workers (what we do here)</li>
+<li>Store data on a network file system.  This is essentially the same thing performance-wise but abstracts away the storage node.</li>
+<li>Use a distributed file system like HDFS (not easy to use with NetCDF) or GlusterFS.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;/home/ubuntu/2014-*-*.nc&#39;</span><span class="p">))</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>365</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Each file contains a few variables, we pull out <code>t2m</code>, the temperature two meters above the ground.  This variable is 33MB per day and has the shape <code>(4, 721, 1400)</code> meaning that it has the following measurements:</p>
+<ul>
+<li>4:  every six hours</li>
+<li>721:  Every quarter degree of latitude</li>
+<li>1440:  Every quarter degree of longitude</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">netCDF4</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">netCDF4</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c"># load single day&#39;s data from disk to memory</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s">&#39;t2m&#39;</span><span class="p">][:]</span>
+<span class="p">{</span><span class="s">&#39;shape&#39;</span><span class="p">:</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s">&#39;MegaBytes&#39;</span><span class="p">:</span> <span class="n">sample</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&apos;MegaBytes&apos;: 33.22368, &apos;shape&apos;: (4, 721, 1440)}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Scatter">Scatter<a class="anchor-link" href="#Scatter">&#182;</a></h3><p>So we roll through our files, load <code>t2m</code> from disk, and scatter out to the workers.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">e</span><span class="o">.</span><span class="n">who_has</span>  <span class="c"># no data in the cluster</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>defaultdict(set, {})</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">time</span> 
+futures = []
+for fn in filenames:
+    with netCDF4.Dataset(fn) as f:
+        t2m = f[&#39;t2m&#39;][:]  # load from disk
+        futures.append(e.scatter([t2m])[0])
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 49.4 s, sys: 1min 37s, total: 2min 26s
+Wall time: 4min 34s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">e</span><span class="o">.</span><span class="n">who_has</span>  <span class="c"># lots of data in the cluster</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>defaultdict(set,
+            {&apos;27d53712-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;284fec64-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;28cbec2e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;294b4ea6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;29c7d598-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;2a483e2c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;2abfa624-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;2b2fd282-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;2b995eb4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2c0d24a2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2c7a1652-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2cecaffa-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2d5e948a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2dcab0ca-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2e40f280-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2eb24494-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;2f1cb02c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;2f805f3c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;2feaa3d8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;304e25b6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;30b25126-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;310fbd52-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;316c6aa2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;31c7e5da-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3220c1aa-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;329b771a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;330a2ae8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;33833352-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;33eb069e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;34594cee-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;34d9deae-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;35598ef6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;35d6f2a6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;36455200-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;36b467c6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;371e81e2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;378994e6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;37ef5592-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;38583800-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;38c31d64-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;3932873a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;39a3dae8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;3a09e16c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;3a78f2a0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;3aeec610-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;3b5f0768-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;3bce6144-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;3c470f90-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;3cbace3a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3d26a57e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3d8de554-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3df56878-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3e57f2fe-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3ebcd9f8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3f1acca2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3f7c1b9c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;3fdd1c12-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;4051a866-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;40c77dde-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;414cfc16-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;41d65a74-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;42485714-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;42bd4f2e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;43291e48-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;43a669f2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;441678a0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;448cab74-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;44ffc12c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;456921ee-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;45d653ea-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;4643d3c0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;46b3a470-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;4727d520-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;479bd29a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;480b8a72-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;487258b0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;48e76a60-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;496ce0e6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;49de8c14-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;4a445fa8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;4aadd15e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4b241b84-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4b9f2234-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4c08ef52-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4c71a042-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4cd9971a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4d3ce96e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4da40680-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;4e05af52-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;4e7c7632-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;4ee99096-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;4f655c94-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;4fe11604-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;505ca210-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;50e88a5a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5163d71e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;51ddb728-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;5243d3e6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;52ad5564-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;530ec3ee-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;53728686-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;53fd0f22-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;5464f66e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;54cda48e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;553197d2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;55a28348-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;560d63ac-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;567a7b72-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;56e21c6e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;57a11ce0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;58155312-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;587c6854-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;58f0331a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;595e9378-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;59c9b752-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;5a3cc72e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;5aa987ce-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;5b09c95e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;5b70dd92-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;5bde0642-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;5c3f9628-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5cb303ec-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5d1ccc0a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5d8a89d4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5e154c86-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5e83e010-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5ef6b874-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5f746d32-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;5feb7fe4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;605a0eaa-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;60d1e678-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;6148d5a8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;61be6cf0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;621f662c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;628fec6c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;6301c5b2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;63743b92-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;63daa06c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;6446a4e2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;64b90a00-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;6527e042-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;658f2644-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;65f9ca26-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;665e98a2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;66d7472a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;6745594a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;679f3ef6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;68099742-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;686fb27a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;68dda014-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;6949c3de-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;69ad4e2c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;6a14a612-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6a98b7fe-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6b1781f6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6b8fad7a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6c096ab6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6c6e47ce-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6cdd1c3a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6d5fb87a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;6ddcb438-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;6e5453b2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;6ec3dcfa-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;6f2bcf7c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;6f93c5fa-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;6ff4e740-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7061d7f6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;70cfc1a8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;713fc30e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;71c80692-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;72382f62-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;72b60586-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;7333bbd4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;73adece2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;742632a6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;74858602-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;74fba0da-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;758e1f96-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;75f61f24-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;76662ada-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;76cd5804-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;773b09a8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;77a248ca-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;780dc208-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;786f9438-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;78ef694c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;795d93cc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;79dc901e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;7a610c0e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;7acd8492-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;7b4768ac-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;7bb94bd4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;7c2c3ad6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7ca0dcec-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7d100c66-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7d90cd88-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7e0861cc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7e7d08ba-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7eed6e16-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7f602cbc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;7fcbe54c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;80561000-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;80d35ea2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;814fdc66-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;81d751dc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;825918a2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;82db3774-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;8362d77e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;83e661a2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;844afcac-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;84a6543a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;850bdeea-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;856b3232-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;85cf66a8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;863d9358-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;86aaf57e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;870cb552-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;878ff4c6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;88227b70-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;88a6a9d6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;89228fa6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;89b2ea88-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;8a4487e0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;8ada9d0c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;8b7596b8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8bebb820-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8c5fadf2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8cced858-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8d4414ce-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8dafcbd8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8e1c7b5c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8e81e280-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;8eef0a04-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;8f759be6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;8ff7e6e6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;90712614-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;90edda38-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;916a8740-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;91e5984a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;925c0098-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;92cd95c8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;9331145e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;938bc868-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;93e3227a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;9443cca6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;94a194d0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;9509f552-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;957596b8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;95df94dc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;964ac298-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;96bd7388-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;9748468e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;97d148ee-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;98667680-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;98fdb8a6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;9964a8c2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;99f3f504-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9a55f934-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9ad17046-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9b39dbc2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9bad0ca0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9c27d174-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9ca99f24-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9d19dadc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;9d90707a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;9e06df9e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;9e80c9a8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;9eff3dba-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;9f7ef410-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;9fef3b6c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;a077fd30-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;a0fa3e9e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;a17a075a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a1d3f328-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a238a6c4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a2a2a448-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a2fd2116-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a35d1ada-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a3b63b24-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a4227d3e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;a47ecd64-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a4f8e6a8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a576d31a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a5e5c478-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a65da1aa-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a6eacd14-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a75c7702-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a7eb3eb0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;a87f46a0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;a8f58cc0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;a963f688-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;a9dc5222-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;aa4b3b6a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;aabe92b8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;ab39a412-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;abb1e396-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;ac2d150c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;aca5001c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;ad15d382-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;ad81bf84-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;adff04c6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;ae7f7142-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;aef13b7e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;af5b20b6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;afc5e4e6-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b026286a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b09154d2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b0ea028a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b14c1632-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b1a80bea-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b205156a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b25fbcf4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;b2b94044-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b3346f26-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b3c33530-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b4489ba8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b4d5a692-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b55848b8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b5e6b698-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b67a1a96-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;b705b524-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;b7707b16-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;b7f951ca-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;b874c5f8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;b8d757c2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;b93b11c2-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;b9b261a0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;ba218cd8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;ba818da4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;baf1e572-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;bb6190e8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;bbcbc544-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;bc3b2b0a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;bcbdf990-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;bd32b834-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;bda26fd0-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;be0978ba-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;be68ba82-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;bec385fc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;bf2eb49e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;bf8ee026-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;bfe9f1dc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;c042778a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;c0a3f1cc-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.62&apos;, 8788)},
+             &apos;c102c256-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c18cc73a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c2207264-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c2ae0372-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c3433672-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c3cdf87a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c460e70c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c4ec2196-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.63&apos;, 8788)},
+             &apos;c57f85f8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c5f0f27e-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c65fdba8-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c6cec40a-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c73e4e9c-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c7aedc70-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c81f2b56-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c8850534-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.61&apos;, 8788)},
+             &apos;c8f06eb4-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;c95fe492-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;c9d94c56-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;ca4b1eee-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;, 8788)},
+             &apos;cac1e902-8999-11e5-87c9-0aa19f43a229-0&apos;: {(&apos;172.31.8.64&apos;,
+               8788)}})</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Construct-dask.array-from-futures">Construct dask.array from futures<a class="anchor-link" href="#Construct-dask.array-from-futures">&#182;</a></h3><p>We now stack these little NumPy arrays into a logical dask.array.</p>
+<p>It's not yet clear what the right API is for this.  People will have many different arrangements of how they want to organize their many small numpy arrays into larger dask.arrays.  This space is green-field.</p>
+<p>So for now, rather than build a <code>dask.array.construct_distributed_array(...)</code> function, we just construct the dask.array by hand.  This is easy to do if you understand <a href="http://dask.pydata.org/en/latest/array-design.html">the structure of dask arrays</a> but not user-friendly otherwise.</p>
+<p>We'll make convenient user-facing functions after more experience with actual problems.  (Send me your problems!)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">dask.array</span> <span class="kn">as</span> <span class="nn">da</span>
+
+<span class="n">dsk</span> <span class="o">=</span> <span class="p">{(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">f</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">futures</span><span class="p">)}</span>
+<span class="n">chunks</span> <span class="o">=</span> <span class="p">((</span><span class="mi">4</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">futures</span><span class="p">),</span> <span class="p">(</span><span class="mi">721</span><span class="p">,),</span> <span class="p">(</span><span class="mi">1440</span><span class="p">,))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">dsk</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="n">chunks</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>dask.array&lt;x, shape=(1460, 721, 1440), dtype=float64, chunksize=(4, 721, 1440)&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>All done.  Hopefully that wasn't too bad but feel free to treat this as magic if you like.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Tell-dask-to-use-the-distributed-cluster">Tell dask to use the distributed cluster<a class="anchor-link" href="#Tell-dask-to-use-the-distributed-cluster">&#182;</a></h3><p>Dask needs to know that we want to use the distributed cluster operated by our executor.  Otherwise it will try to use threads by default and this will fail.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">dask</span>
+<span class="n">dask</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">get</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;dask.context.set_options at 0x7fa62423b950&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Compute-and-time">Compute and time<a class="anchor-link" href="#Compute-and-time">&#182;</a></h3><p>We perform a sequence of small operations to tease out performance characteristics of the distributed network.  Our full data is 12 GB spread over four nodes, each with eight cores.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">x</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e9</span>  <span class="c"># GB</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>12.1266432</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Tiny-Computation-and-Overhead">Tiny Computation and Overhead<a class="anchor-link" href="#Tiny-Computation-and-Overhead">&#182;</a></h3><p>We pull a single element from the array to measure total system overhead.</p>
+<p>The entire process takes a few milliseconds.  I think that we can reduce this a bit further (there is an unnecessary extra roundtrip in there), but we're within a moderate factor of theoretical optimum.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> x[0, 0, 0].compute()
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 8 ms, sys: 0 ns, total: 8 ms
+Wall time: 8.81 ms
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>253.96238623555584</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Small-data-transfer">Small data transfer<a class="anchor-link" href="#Small-data-transfer">&#182;</a></h3><p>Data transfer is non-trivial on this network.  Here we move around 8MB from a worker to the local machine in 110ms.</p>
+<p>Ignoring latency, this is around 75MB/s.  That's decent, but actually much slower than our disk bandwidth when operating out-of-core on a single machine.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> x[100, :, :].compute()
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 64 ms, sys: 28 ms, total: 92 ms
+Wall time: 110 ms
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 264.11380568,  264.11380568,  264.11380568, ...,  264.11380568,
+         264.11380568,  264.11380568],
+       [ 265.37222634,  265.36602722,  265.35982811, ...,  265.38307479,
+         265.37997524,  265.3753259 ],
+       [ 265.46521309,  265.45901397,  265.45126508, ...,  265.47761132,
+         265.47296198,  265.46986243],
+       ..., 
+       [ 243.97287605,  243.96977649,  243.96512716, ...,  243.98527428,
+         243.98062495,  243.97752539],
+       [ 243.97287605,  243.96977649,  243.96512716, ...,  243.98527428,
+         243.98062495,  243.97752539],
+       [ 243.10190018,  243.10190018,  243.10190018, ...,  243.10190018,
+         243.10190018,  243.10190018]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These computations are about what we would expect if operating from disk.  Neither distributed-memory nor local-disk is notably superior here.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Computation-bound">Computation bound<a class="anchor-link" href="#Computation-bound">&#182;</a></h3><p>Full computations use the whole cluster, we're mostly compute bound here.  There is little data to transfer around (just single floats) so we're pretty sure that we're stressing computation and network latency.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> x.sum().compute()
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 460 ms, sys: 36 ms, total: 496 ms
+Wall time: 774 ms
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>422680260719.94751</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is a <em>huge win</em> over an on-disk solution.  This computation would have taken us minutes to do if we had to pull the data from disk.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Increase-Communication">Increase Communication<a class="anchor-link" href="#Increase-Communication">&#182;</a></h3><p>The next two computations do similar computations but with different communication patterns, we see a very large change in performance.</p>
+<ul>
+<li>The first computation computes the average temperature over the whole planet over time (averaging out spatial dimensions).  It executes very quickly.  This does not require any communication between worker nodes because it is aligned with how we've chunked our data.</li>
+<li>The second computation computes the average over the time dimension.  This does require communication between worker nodes as they share about 3GB between each other.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> x.mean(axis=[1, 2]).compute()
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 644 ms, sys: 32 ms, total: 676 ms
+Wall time: 1.17 s
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 277.29761461,  277.50818372,  277.77023522, ...,  277.26209424,
+        277.61283083,  277.38320223])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> x.mean(axis=0).compute()
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 688 ms, sys: 160 ms, total: 848 ms
+Wall time: 5min 27s
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 260.67545742,  260.67545742,  260.67545742, ...,  260.67545742,
+         260.67545742,  260.67545742],
+       [ 260.80978656,  260.81082765,  260.8119064 , ...,  260.80643692,
+         260.80756166,  260.80863382],
+       [ 260.85199166,  260.85328043,  260.85450587, ...,  260.84783287,
+         260.84923888,  260.85058685],
+       ..., 
+       [ 228.02812417,  228.02513365,  228.0221535 , ...,  228.0347369 ,
+         228.03253842,  228.03033575],
+       [ 228.02848855,  228.02552743,  228.02253079, ...,  228.03511764,
+         228.03293455,  228.03067397],
+       [ 227.19711672,  227.19711672,  227.19711672, ...,  227.19711672,
+         227.19711672,  227.19711672]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are a few solutions to this problem:</p>
+<ol>
+<li>We can use networks with better interconnects</li>
+<li>We can change dask.array's reductions to be more tree-like.  The data is already scattered so that nearby days are on the same machine.  A more fine grained reduction will exploit this considerably.</li>
+</ol>
+<p>Until we solve this problem this computation is slower in distributed-memory than with local-disk.  Disk bandwidth is better and we can be more clever about keeping results in a single shared memory space.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fail-case">Fail case<a class="anchor-link" href="#Fail-case">&#182;</a></h3><p>The following computation takes a <em>very long time</em>.</p>
+
+<pre><code>(x - x.mean())
+
+</code></pre>
+<p>This is because we don't track the size in bytes of every variable in the scheduler.</p>
+<p>After we compute <code>x.mean()</code> on one machine we want to subtract it from every numpy block $x_{i}$ of our array.  If we know the relative size of the arrays then we know that we want to move the <code>x.mean()</code> result to the machine with $x_i$ because <code>x.mean()</code> is only a few bytes while $x_i$ is 33MB.  Unfortunately the scheduler doesn't know what we know yet, so it doesn't always make this decision, and so the resulting computation can be very slow over a slow interconnect.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="TODO">TODO<a class="anchor-link" href="#TODO">&#182;</a></h3><p>In conclusion, we have to solve the following problems:</p>
+<ol>
+<li>Think about n-dimensional distributed array storage</li>
+<li>Use dask.array + distributed more to get a sense of what user-APIs would be broadly helpful</li>
+<li>Support reduction trees in <code>dask.array</code></li>
+<li>Track size of variables in the distributed scheduler.  </li>
+</ol>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+
+    <section class="comments" id="comments">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'blaze-ecosystem'; // required: replace example with your forum shortname
+            var disqus_identifier = 'distributed-array';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        <div style="margin-bottom:20px"></div>
+    </section>
+            </div>
+
+            <div class="article-info">
+
+<div class="article-info">
+
+
+
+<span><b>Publication date:</b> Fri 13 November 2015</span>
+<br>
+	<a class = "label-default" href="../../../../../tag/dask.html">dask</a>
+	<a class = "label-default" href="../../../../../tag/distributed.html">distributed</a>
+<br>
+</div>            </div>
+            <!-- /.entry-content -->
+
+        </article>
+
+        <ul class="pager">
+        </ul>
+</section>
+
+</div>
+
+<br>
+
+
+<footer class="footer">
+      <div class="container">
+        <!--a href="https://anaconda.org"><img src="../../../../../images/anaconda_logo.png" class="anaconda-icon"></a-->
+        <p><small>Development sponsored by</small><a class="navbar-link" href="https://www.continuum.io/"><img src="../../../../../images/cio_logo.png" class="cio-icon"></a></p>
+    </div>
+    <br>
+</footer>
+
+<!-- Google Analytics -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67320551-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
