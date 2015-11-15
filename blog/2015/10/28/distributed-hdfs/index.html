@@ -236,8 +236,8 @@ hold these paths.  Also, because only the first block will have the CSV header
 we provide keyword arguments directly to the <code>pd.read_csv</code> call.</p>
 <p>Or alternatively we've wrapped up both steps into a little convenience function:</p>
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">hdfs</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">dfs</span> <span class="o">=</span> <span class="n">hdfs</span><span class="o">.</span><span class="n">map_blocks</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="s">&#39;/data/nyctaxi/&#39;</span><span class="p">,</span>
-<span class="o">...</span>                       <span class="s">&#39;192.168.50.100&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dfs</span> <span class="o">=</span> <span class="n">hdfs</span><span class="o">.</span><span class="n">map_blocks</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="s">&#39;/data/nyctaxi/&#39;</span><span class="p">,</span>
+<span class="o">...</span>                       <span class="s">&#39;192.168.50.100&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">,</span> <span class="n">executor</span><span class="o">=</span><span class="n">executor</span><span class="p">,</span>
 <span class="o">...</span>                       <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
