@@ -87,8 +87,8 @@ in pure Python.</p>
 </ul>
 <h2>concurrent.futures interface</h2>
 <p>The <code>distributed.Executor</code> interface mimics the <code>concurrent.futures</code> stdlib package.</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Executor</span>
-<span class="n">executor</span> <span class="o">=</span> <span class="n">Executor</span><span class="p">(</span><span class="s">&#39;192.168.1.124:8787&#39;</span><span class="p">)</span>  <span class="c"># address of center-node in cluster</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Executor</span>
+<span class="n">executor</span> <span class="o">=</span> <span class="n">Executor</span><span class="p">(</span><span class="s1">&#39;192.168.1.124:8787&#39;</span><span class="p">)</span>  <span class="c1"># address of center-node in cluster</span>
 
 <span class="k">def</span> <span class="nf">inc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
@@ -102,7 +102,7 @@ in pure Python.</p>
 <p>The submit call executes <code>inc(1)</code> on a remote machine.  The returned future
 serves as a proxy to the remote result.  We can collect this result back to the
 local process with the <code>.result()</code> method:</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>  <span class="c"># transfers data from remote to local process</span>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>  <span class="c1"># transfers data from remote to local process</span>
 <span class="mi">2</span>
 </pre></div>
 
@@ -113,14 +113,14 @@ process is expensive.  We avoid calling <code>.result()</code>.</p>
 <p>By default the result of the computation (<code>2</code>) stays on the remote computer
 where the computation occurred.  We avoid data transfer by allowing <code>submit</code>
 calls to directly accept futures as arguments:</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">inc</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c"># no need to call x.result()</span>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">inc</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># no need to call x.result()</span>
 </pre></div>
 
 
 <p>The computation for <code>y</code> will happen on the same machine where <code>x</code> lives.  This
 interface deviates from <code>concurrent.futures</code> where we would have to wait on <code>x</code>
 before submiting <code>y</code>.  We no longer have to do the following:</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">inc</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>  <span class="c"># old concurrent.futures API</span>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">inc</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>  <span class="c1"># old concurrent.futures API</span>
 </pre></div>
 
 
@@ -159,7 +159,7 @@ arrays.</p>
 but that we can accomplish by hand with some for loops while still using
 parallel distributed computing.  The difference here is that we're not limited
 to the algorithms chosen for us and can screw around more freely.</p>
-<div class="highlight"><pre>finish           total             single array output
+<div class="highlight"><pre><span></span>finish           total             single array output
     ^          /        \
     |        z1          z2        neighbors merge
     |       /  \        /  \
@@ -172,7 +172,7 @@ start   x1 x2 x3 x4 x5 x6 x7 x8    many array inputs
 <ul>
 <li>Make sixteen, million element random arrays on the cluster:</li>
 </ul>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="n">xs</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">,</span> <span class="p">[</span><span class="mi">1000000</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 
@@ -180,7 +180,7 @@ start   x1 x2 x3 x4 x5 x6 x7 x8    many array inputs
 <ul>
 <li>Add neighbors until there is only one left:</li>
 </ul>
-<div class="highlight"><pre><span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">xs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
 </pre></div>
@@ -189,7 +189,7 @@ start   x1 x2 x3 x4 x5 x6 x7 x8    many array inputs
 <ul>
 <li>Fetch final result:</li>
 </ul>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 <span class="n">array</span><span class="p">([</span>  <span class="mf">2.069694</span>  <span class="p">,</span>   <span class="mf">9.01727599</span><span class="p">,</span>   <span class="mf">5.42682524</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span>   <span class="mf">0.42372487</span><span class="p">,</span>
          <span class="mf">1.50364966</span><span class="p">,</span>  <span class="mf">13.48674896</span><span class="p">])</span>
 </pre></div>

@@ -86,8 +86,10 @@
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
 .highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
 .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
 .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
 .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
 .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
 .highlight .gd { color: #A00000 } /* Generic.Deleted */
@@ -173,17 +175,17 @@
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Dependencies">Dependencies<a class="anchor-link" href="#Dependencies">&#182;</a></h2><p>The Python packages required for this analysis can be installed on the client machine using the <a href="https://store.continuum.io/cshop/anaconda/">Anaconda</a> Python distribution.</p>
 <p>For convenience, the <code>environment.yml</code> file shown below contains the information required to create a new Conda environment (named <code>blaze-impala</code>) and install all of dependencies used in this analysis.</p>
-<div class="highlight"><pre><span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">blaze-impala</span>
-<span class="l-Scalar-Plain">channels</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">blaze</span>
-<span class="l-Scalar-Plain">dependencies</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">blaze</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">bokeh=0.9</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">impyla</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">jupyter</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pandas</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pyhive</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">python=2.7</span>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">blaze-impala</span>
+<span class="l l-Scalar l-Scalar-Plain">channels</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">blaze</span>
+<span class="l l-Scalar l-Scalar-Plain">dependencies</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">blaze</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">bokeh=0.9</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">impyla</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">jupyter</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pandas</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pyhive</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python=2.7</span>
 </pre></div>
 <p>To create this environment, create a file named <code>environment.yml</code>, paste the above contents into this file, then execute the command <code>conda env create</code> in the same directory as the <code>environment.yml</code> file. You can then <code>source activate blaze-impala</code> to work in the new environment.</p>
 
@@ -308,7 +310,7 @@ impala&gt; invalidate metadata;</code></pre>
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">blaze</span> <span class="kn">as</span> <span class="nn">bz</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -552,7 +554,7 @@ impala&gt; invalidate metadata;</code></pre>
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">bokeh</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
 </pre></div>
@@ -603,7 +605,7 @@ impala&gt; invalidate metadata;</code></pre>
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s">&#39;hive://54.81.249.17/default::reddit_parquet&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s1">&#39;hive://54.81.249.17/default::reddit_parquet&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -626,7 +628,7 @@ impala&gt; invalidate metadata;</code></pre>
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">data</span><span class="o">.</span><span class="n">dshape</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dshape</span>
 </pre></div>
 
 </div>
@@ -689,7 +691,7 @@ impala&gt; invalidate metadata;</code></pre>
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">n_posts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">n_posts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -712,7 +714,7 @@ impala&gt; invalidate metadata;</code></pre>
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">n_posts</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">n_posts</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -750,7 +752,7 @@ FROM &#96;reddit_parquet&#96;
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> int(n_posts)
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">time</span> int(n_posts)
 </pre></div>
 
 </div>
@@ -818,7 +820,7 @@ Wall time: 4min 30s
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s">&#39;impala://54.81.251.205/default::reddit_parquet&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s1">&#39;impala://54.81.251.205/default::reddit_parquet&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -850,7 +852,7 @@ Wall time: 4min 30s
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">n_posts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">n_posts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -873,7 +875,7 @@ Wall time: 4min 30s
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">n_posts</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">n_posts</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -911,7 +913,7 @@ FROM reddit_parquet
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> int(n_posts)
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">time</span> int(n_posts)
 </pre></div>
 
 </div>
@@ -977,7 +979,7 @@ Wall time: 5.13 s
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">n_up_votes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ups</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">n_up_votes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ups</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -990,7 +992,7 @@ Wall time: 5.13 s
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">n_up_votes</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">n_up_votes</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -1018,7 +1020,7 @@ FROM reddit_parquet
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> int(n_up_votes)
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">time</span> int(n_up_votes)
 </pre></div>
 
 </div>
@@ -1075,7 +1077,7 @@ Wall time: 4.14 s
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">n_posts_in_r_soccer</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">subreddit</span> <span class="o">==</span> <span class="s">&#39;soccer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">n_posts_in_r_soccer</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">subreddit</span> <span class="o">==</span> <span class="s1">&#39;soccer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -1088,7 +1090,7 @@ Wall time: 4.14 s
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> int(n_posts_in_r_soccer)
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">time</span> int(n_posts_in_r_soccer)
 </pre></div>
 
 </div>
@@ -1145,7 +1147,7 @@ Wall time: 4.99 s
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">top_subreddits</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">by</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">subreddit</span><span class="p">,</span> <span class="n">posts</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">())</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&#39;posts&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_subreddits</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">by</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">subreddit</span><span class="p">,</span> <span class="n">posts</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">())</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1158,7 +1160,7 @@ Wall time: 4.99 s
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">top_subreddits</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">top_subreddits</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -1198,7 +1200,7 @@ FROM reddit_parquet GROUP BY reddit_parquet.subreddit) AS anon_1 ORDER BY anon_1
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> bz.odo(top_subreddits, pd.DataFrame)
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">time</span> bz.odo(top_subreddits, pd.DataFrame)
 </pre></div>
 
 </div>
@@ -1316,7 +1318,7 @@ Wall time: 27.9 s
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">before_1pm</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ups</span><span class="p">[</span><span class="n">bz</span><span class="o">.</span><span class="n">hour</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">13</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">before_1pm</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ups</span><span class="p">[</span><span class="n">bz</span><span class="o">.</span><span class="n">hour</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">13</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -1329,7 +1331,7 @@ Wall time: 27.9 s
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> int(before_1pm)
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">time</span> int(before_1pm)
 </pre></div>
 
 </div>
@@ -1397,7 +1399,7 @@ Wall time: 6.26 s
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">iama</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">subreddit</span> <span class="o">==</span> <span class="s">&#39;IAmA&#39;</span><span class="p">)]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">iama</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">subreddit</span> <span class="o">==</span> <span class="s1">&#39;IAmA&#39;</span><span class="p">)]</span>
 </pre></div>
 
 </div>
@@ -1420,7 +1422,7 @@ Wall time: 6.26 s
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&#39;created_utc_t&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;created_utc_t&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1489,7 +1491,7 @@ Wall time: 6.26 s
 <div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">days</span> <span class="o">=</span> <span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">year</span><span class="p">(</span><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2007</span><span class="p">)</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">+</span> <span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">month</span><span class="p">(</span><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">31</span>  <span class="o">+</span> <span class="n">bz</span><span class="o">.</span><span class="n">day</span><span class="p">(</span><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">days</span> <span class="o">=</span> <span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">year</span><span class="p">(</span><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2007</span><span class="p">)</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">+</span> <span class="p">(</span><span class="n">bz</span><span class="o">.</span><span class="n">month</span><span class="p">(</span><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">31</span>  <span class="o">+</span> <span class="n">bz</span><span class="o">.</span><span class="n">day</span><span class="p">(</span><span class="n">iama</span><span class="o">.</span><span class="n">created_utc_t</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1512,7 +1514,7 @@ Wall time: 6.26 s
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">with_day</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">iama</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">with_day</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">iama</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1535,7 +1537,7 @@ Wall time: 6.26 s
 <div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">by_day</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">by</span><span class="p">(</span><span class="n">with_day</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">posts</span><span class="o">=</span><span class="n">with_day</span><span class="o">.</span><span class="n">created_utc_t</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">by_day</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">by</span><span class="p">(</span><span class="n">with_day</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">posts</span><span class="o">=</span><span class="n">with_day</span><span class="o">.</span><span class="n">created_utc_t</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
 </pre></div>
 
 </div>
@@ -1558,7 +1560,7 @@ Wall time: 6.26 s
 <div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">time</span> by_day_result = bz.odo(by_day, pd.DataFrame)
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">time</span> by_day_result = bz.odo(by_day, pd.DataFrame)
 </pre></div>
 
 </div>
@@ -1586,7 +1588,7 @@ Wall time: 7.52 s
 <div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">by_day_result</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">odo</span><span class="p">(</span><span class="n">by_day</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">by_day_result</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">odo</span><span class="p">(</span><span class="n">by_day</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1609,7 +1611,7 @@ Wall time: 7.52 s
 <div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">by_day_result</span> <span class="o">=</span> <span class="n">by_day_result</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;day&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">by_day_result</span> <span class="o">=</span> <span class="n">by_day_result</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -1632,7 +1634,7 @@ Wall time: 7.52 s
 <div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">rng</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;5/28/2009&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">by_day_result</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;5/28/2009&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">by_day_result</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
 <span class="n">by_day_result</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">rng</span>
 </pre></div>
 
@@ -1656,10 +1658,10 @@ Wall time: 7.52 s
 <div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">f</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">by_day_result</span><span class="o">.</span><span class="n">posts</span><span class="p">,</span> <span class="n">by_day_result</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
-               <span class="n">title</span><span class="o">=</span><span class="s">&#39;Comments in /r/IAmA subreddit&#39;</span><span class="p">,</span>
-               <span class="n">xlabel</span><span class="o">=</span><span class="s">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s">&#39;Comments&#39;</span><span class="p">,</span>
-               <span class="n">tools</span><span class="o">=</span><span class="s">&#39;pan,reset,save,wheel_zoom,box_zoom&#39;</span><span class="p">,</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">by_day_result</span><span class="o">.</span><span class="n">posts</span><span class="p">,</span> <span class="n">by_day_result</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+               <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Comments in /r/IAmA subreddit&#39;</span><span class="p">,</span>
+               <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Comments&#39;</span><span class="p">,</span>
+               <span class="n">tools</span><span class="o">=</span><span class="s1">&#39;pan,reset,save,wheel_zoom,box_zoom&#39;</span><span class="p">,</span>
                <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>

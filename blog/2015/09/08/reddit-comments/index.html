@@ -86,8 +86,10 @@
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
 .highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
 .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
 .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
 .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
 .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
 .highlight .gd { color: #A00000 } /* Generic.Deleted */
@@ -175,11 +177,11 @@
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">bz2</span> <span class="kn">import</span> <span class="n">BZ2File</span>
 <span class="kn">import</span> <span class="nn">ujson</span>
 
-<span class="k">with</span> <span class="n">BZ2File</span><span class="p">(</span><span class="s">&#39;RC_2015-05.bz2&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">BZ2File</span><span class="p">(</span><span class="s1">&#39;RC_2015-05.bz2&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
 <span class="n">ujson</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 </pre></div>
@@ -274,7 +276,7 @@
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">NaT</span><span class="p">,</span> <span class="n">DataFrame</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">NaT</span><span class="p">,</span> <span class="n">DataFrame</span>
 <span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">dissoc</span>
 
 
@@ -282,34 +284,34 @@
     <span class="sd">&quot;&quot;&quot;Convert a line of json into a cleaned up dict.&quot;&quot;&quot;</span>
     <span class="n">blob</span> <span class="o">=</span> <span class="n">ujson</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     
-    <span class="c"># Convert timestamps into Timestamp objects</span>
-    <span class="n">date</span> <span class="o">=</span> <span class="n">blob</span><span class="p">[</span><span class="s">&#39;created_utc&#39;</span><span class="p">]</span>
-    <span class="n">blob</span><span class="p">[</span><span class="s">&#39;created_utc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">date</span><span class="p">))</span>
-    <span class="n">edited</span> <span class="o">=</span> <span class="n">blob</span><span class="p">[</span><span class="s">&#39;edited&#39;</span><span class="p">]</span>
-    <span class="n">blob</span><span class="p">[</span><span class="s">&#39;edited&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">edited</span><span class="p">))</span> <span class="k">if</span> <span class="n">edited</span> <span class="k">else</span> <span class="n">NaT</span>
+    <span class="c1"># Convert timestamps into Timestamp objects</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;created_utc&#39;</span><span class="p">]</span>
+    <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;created_utc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">date</span><span class="p">))</span>
+    <span class="n">edited</span> <span class="o">=</span> <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;edited&#39;</span><span class="p">]</span>
+    <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;edited&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">edited</span><span class="p">))</span> <span class="k">if</span> <span class="n">edited</span> <span class="k">else</span> <span class="n">NaT</span>
     
-    <span class="c"># Convert deleted posts into `None`s (missing text data)</span>
-    <span class="k">if</span> <span class="n">blob</span><span class="p">[</span><span class="s">&#39;author&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;[deleted]&#39;</span><span class="p">:</span>
-        <span class="n">blob</span><span class="p">[</span><span class="s">&#39;author&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">blob</span><span class="p">[</span><span class="s">&#39;body&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;[deleted]&#39;</span><span class="p">:</span>
-        <span class="n">blob</span><span class="p">[</span><span class="s">&#39;body&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="c1"># Convert deleted posts into `None`s (missing text data)</span>
+    <span class="k">if</span> <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;[deleted]&#39;</span><span class="p">:</span>
+        <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;[deleted]&#39;</span><span class="p">:</span>
+        <span class="n">blob</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
         
-    <span class="c"># Remove &#39;id&#39;, and &#39;subreddit_id&#39; as they&#39;re redundant</span>
-    <span class="c"># Remove &#39;retrieved_on&#39; as it&#39;s irrelevant</span>
-    <span class="k">return</span> <span class="n">dissoc</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;subreddit_id&#39;</span><span class="p">,</span> <span class="s">&#39;retrieved_on&#39;</span><span class="p">)</span>
+    <span class="c1"># Remove &#39;id&#39;, and &#39;subreddit_id&#39; as they&#39;re redundant</span>
+    <span class="c1"># Remove &#39;retrieved_on&#39; as it&#39;s irrelevant</span>
+    <span class="k">return</span> <span class="n">dissoc</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;subreddit_id&#39;</span><span class="p">,</span> <span class="s1">&#39;retrieved_on&#39;</span><span class="p">)</span>
 
 
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">,</span> <span class="s">&#39;author&#39;</span><span class="p">,</span> <span class="s">&#39;author_flair_css_class&#39;</span><span class="p">,</span> <span class="s">&#39;author_flair_text&#39;</span><span class="p">,</span>
-           <span class="s">&#39;body&#39;</span><span class="p">,</span> <span class="s">&#39;controversiality&#39;</span><span class="p">,</span> <span class="s">&#39;created_utc&#39;</span><span class="p">,</span> <span class="s">&#39;distinguished&#39;</span><span class="p">,</span> <span class="s">&#39;downs&#39;</span><span class="p">,</span>
-           <span class="s">&#39;edited&#39;</span><span class="p">,</span> <span class="s">&#39;gilded&#39;</span><span class="p">,</span> <span class="s">&#39;link_id&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;parent_id&#39;</span><span class="p">,</span>
-           <span class="s">&#39;removal_reason&#39;</span><span class="p">,</span> <span class="s">&#39;score&#39;</span><span class="p">,</span> <span class="s">&#39;score_hidden&#39;</span><span class="p">,</span> <span class="s">&#39;subreddit&#39;</span><span class="p">,</span> <span class="s">&#39;ups&#39;</span><span class="p">]</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;archived&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;author_flair_css_class&#39;</span><span class="p">,</span> <span class="s1">&#39;author_flair_text&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;controversiality&#39;</span><span class="p">,</span> <span class="s1">&#39;created_utc&#39;</span><span class="p">,</span> <span class="s1">&#39;distinguished&#39;</span><span class="p">,</span> <span class="s1">&#39;downs&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;edited&#39;</span><span class="p">,</span> <span class="s1">&#39;gilded&#39;</span><span class="p">,</span> <span class="s1">&#39;link_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;parent_id&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;removal_reason&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;score_hidden&#39;</span><span class="p">,</span> <span class="s1">&#39;subreddit&#39;</span><span class="p">,</span> <span class="s1">&#39;ups&#39;</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">to_df</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Convert a list of json strings into a dataframe&quot;&quot;&quot;</span>
     <span class="n">blobs</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">to_json</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">&#39;created_utc&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;created_utc&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -333,16 +335,16 @@
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">castra</span> <span class="kn">import</span> <span class="n">Castra</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">castra</span> <span class="kn">import</span> <span class="n">Castra</span>
 <span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">peek</span><span class="p">,</span> <span class="n">partition_all</span>
 
-<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;distinguished&#39;</span><span class="p">,</span> <span class="s">&#39;subreddit&#39;</span><span class="p">,</span> <span class="s">&#39;removal_reason&#39;</span><span class="p">]</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;distinguished&#39;</span><span class="p">,</span> <span class="s1">&#39;subreddit&#39;</span><span class="p">,</span> <span class="s1">&#39;removal_reason&#39;</span><span class="p">]</span>
 
-<span class="k">with</span> <span class="n">BZ2File</span><span class="p">(</span><span class="s">&#39;RC_2015-05.bz2&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">BZ2File</span><span class="p">(</span><span class="s1">&#39;RC_2015-05.bz2&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">batches</span> <span class="o">=</span> <span class="n">partition_all</span><span class="p">(</span><span class="mi">200000</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
     <span class="n">df</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">to_df</span><span class="p">,</span> <span class="n">batches</span><span class="p">))</span>
-    <span class="n">castra</span> <span class="o">=</span> <span class="n">Castra</span><span class="p">(</span><span class="s">&#39;reddit_data.castra&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">)</span>
-    <span class="n">castra</span><span class="o">.</span><span class="n">extend_sequence</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;3h&#39;</span><span class="p">)</span>
+    <span class="n">castra</span> <span class="o">=</span> <span class="n">Castra</span><span class="p">(</span><span class="s1">&#39;reddit_data.castra&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">)</span>
+    <span class="n">castra</span><span class="o">.</span><span class="n">extend_sequence</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;3h&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -365,15 +367,15 @@
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="kn">as</span> <span class="nn">dd</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="kn">as</span> <span class="nn">dd</span>
 <span class="kn">from</span> <span class="nn">dask.diagnostics</span> <span class="kn">import</span> <span class="n">ProgressBar</span>
 
-<span class="c"># Start a progress bar for all computations</span>
+<span class="c1"># Start a progress bar for all computations</span>
 <span class="n">pbar</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">()</span>
 <span class="n">pbar</span><span class="o">.</span><span class="n">register</span><span class="p">()</span>
 
-<span class="c"># Load data into a dask dataframe:</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_castra</span><span class="p">(</span><span class="s">&#39;reddit_data.castra/&#39;</span><span class="p">)</span>
+<span class="c1"># Load data into a dask dataframe:</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_castra</span><span class="p">(</span><span class="s1">&#39;reddit_data.castra/&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
@@ -531,7 +533,7 @@
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">df</span><span class="o">.</span><span class="n">ups</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ups</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -578,7 +580,7 @@
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">df</span><span class="o">.</span><span class="n">subreddit</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">subreddit</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -634,7 +636,7 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">bokeh.charts</span> <span class="kn">import</span> <span class="n">TimeSeries</span><span class="p">,</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">bokeh.charts</span> <span class="kn">import</span> <span class="n">TimeSeries</span><span class="p">,</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span>
 <span class="n">output_notebook</span><span class="p">()</span>
 </pre></div>
 
@@ -872,11 +874,11 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">counts_12h</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">ups</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;12h&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">counts_12h</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">ups</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;12h&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
 
-<span class="c"># Plot the results</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">counts_12h</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">counts_12h</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;All Comments&#39;</span><span class="p">,</span>
-                 <span class="n">xlabel</span><span class="o">=</span><span class="s">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s">&#39;Comments&#39;</span><span class="p">)</span>
+<span class="c1"># Plot the results</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">counts_12h</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">counts_12h</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;All Comments&#39;</span><span class="p">,</span>
+                 <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Comments&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">left</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">formatter</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">show</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 </pre></div>
@@ -946,11 +948,11 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">ama_by_h</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">subreddit</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subreddit</span><span class="o">==</span><span class="s">&#39;IAmA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ama_by_h</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">subreddit</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subreddit</span><span class="o">==</span><span class="s1">&#39;IAmA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
 
-<span class="c"># Plot the results</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">ama_by_h</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">ama_by_h</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;Comments in r/IAmA&#39;</span><span class="p">,</span>
-                 <span class="n">xlabel</span><span class="o">=</span><span class="s">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s">&#39;Comments&#39;</span><span class="p">)</span>
+<span class="c1"># Plot the results</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">ama_by_h</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">ama_by_h</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Comments in r/IAmA&#39;</span><span class="p">,</span>
+                 <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Comments&#39;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 </pre></div>
 
@@ -1018,15 +1020,15 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Get the start and end of the most popular hour in IAmA</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Get the start and end of the most popular hour in IAmA</span>
 <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">ama_by_h</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
 
-<span class="c"># Select all comments in IAmA in this range</span>
+<span class="c1"># Select all comments in IAmA in this range</span>
 <span class="n">in_range</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">]</span>
 
-<span class="c"># Get the link id for the top post in IAmA in this period</span>
-<span class="n">ama_ids</span> <span class="o">=</span> <span class="n">in_range</span><span class="p">[</span><span class="n">in_range</span><span class="o">.</span><span class="n">subreddit</span><span class="o">==</span><span class="s">&#39;IAmA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">link_id</span>
-<span class="n">top_ama</span> <span class="o">=</span> <span class="n">ama_ids</span><span class="p">[</span><span class="n">ama_ids</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;t3_&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># Get the link id for the top post in IAmA in this period</span>
+<span class="n">ama_ids</span> <span class="o">=</span> <span class="n">in_range</span><span class="p">[</span><span class="n">in_range</span><span class="o">.</span><span class="n">subreddit</span><span class="o">==</span><span class="s1">&#39;IAmA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">link_id</span>
+<span class="n">top_ama</span> <span class="o">=</span> <span class="n">ama_ids</span><span class="p">[</span><span class="n">ama_ids</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;t3_&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -1053,9 +1055,9 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">praw</span>
-<span class="n">reddit</span> <span class="o">=</span> <span class="n">praw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span><span class="n">user_agent</span><span class="o">=</span><span class="s">&#39;python&#39;</span><span class="p">)</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">&#39;https://www.reddit.com/r/IAmA/comments/{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top_ama</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">praw</span>
+<span class="n">reddit</span> <span class="o">=</span> <span class="n">praw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span><span class="n">user_agent</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.reddit.com/r/IAmA/comments/{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top_ama</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
 <span class="n">thread</span> <span class="o">=</span> <span class="n">reddit</span><span class="o">.</span><span class="n">get_submission</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">thread</span><span class="o">.</span><span class="n">title</span>
 </pre></div>
@@ -1106,26 +1108,26 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Create a set of stopwords to ignore</span>
-<span class="n">stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;able&quot;</span><span class="p">,</span> <span class="s">&quot;about&quot;</span><span class="p">,</span> <span class="s">&quot;across&quot;</span><span class="p">,</span> <span class="s">&quot;after&quot;</span><span class="p">,</span> <span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="s">&quot;almost&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;also&quot;</span><span class="p">,</span> <span class="s">&quot;am&quot;</span><span class="p">,</span> <span class="s">&quot;among&quot;</span><span class="p">,</span> <span class="s">&quot;an&quot;</span><span class="p">,</span> <span class="s">&quot;and&quot;</span><span class="p">,</span> <span class="s">&quot;any&quot;</span><span class="p">,</span> <span class="s">&quot;are&quot;</span><span class="p">,</span> <span class="s">&quot;as&quot;</span><span class="p">,</span> <span class="s">&quot;at&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;be&quot;</span><span class="p">,</span> <span class="s">&quot;because&quot;</span><span class="p">,</span> <span class="s">&quot;been&quot;</span><span class="p">,</span> <span class="s">&quot;but&quot;</span><span class="p">,</span> <span class="s">&quot;by&quot;</span><span class="p">,</span> <span class="s">&quot;can&quot;</span><span class="p">,</span> <span class="s">&quot;cannot&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;could&quot;</span><span class="p">,</span> <span class="s">&quot;dear&quot;</span><span class="p">,</span> <span class="s">&quot;did&quot;</span><span class="p">,</span> <span class="s">&quot;do&quot;</span><span class="p">,</span> <span class="s">&quot;does&quot;</span><span class="p">,</span> <span class="s">&quot;either&quot;</span><span class="p">,</span> <span class="s">&quot;else&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;ever&quot;</span><span class="p">,</span> <span class="s">&quot;every&quot;</span><span class="p">,</span> <span class="s">&quot;for&quot;</span><span class="p">,</span> <span class="s">&quot;from&quot;</span><span class="p">,</span> <span class="s">&quot;get&quot;</span><span class="p">,</span> <span class="s">&quot;got&quot;</span><span class="p">,</span> <span class="s">&quot;had&quot;</span><span class="p">,</span> <span class="s">&quot;has&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;have&quot;</span><span class="p">,</span> <span class="s">&quot;he&quot;</span><span class="p">,</span> <span class="s">&quot;her&quot;</span><span class="p">,</span> <span class="s">&quot;hers&quot;</span><span class="p">,</span> <span class="s">&quot;him&quot;</span><span class="p">,</span> <span class="s">&quot;his&quot;</span><span class="p">,</span> <span class="s">&quot;how&quot;</span><span class="p">,</span> <span class="s">&quot;however&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;i&quot;</span><span class="p">,</span> <span class="s">&quot;if&quot;</span><span class="p">,</span> <span class="s">&quot;in&quot;</span><span class="p">,</span> <span class="s">&quot;into&quot;</span><span class="p">,</span> <span class="s">&quot;is&quot;</span><span class="p">,</span> <span class="s">&quot;it&quot;</span><span class="p">,</span> <span class="s">&quot;its&quot;</span><span class="p">,</span> <span class="s">&quot;just&quot;</span><span class="p">,</span> <span class="s">&quot;least&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;let&quot;</span><span class="p">,</span> <span class="s">&quot;like&quot;</span><span class="p">,</span> <span class="s">&quot;likely&quot;</span><span class="p">,</span> <span class="s">&quot;may&quot;</span><span class="p">,</span> <span class="s">&quot;me&quot;</span><span class="p">,</span> <span class="s">&quot;might&quot;</span><span class="p">,</span> <span class="s">&quot;most&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;must&quot;</span><span class="p">,</span> <span class="s">&quot;my&quot;</span><span class="p">,</span> <span class="s">&quot;neither&quot;</span><span class="p">,</span> <span class="s">&quot;no&quot;</span><span class="p">,</span> <span class="s">&quot;nor&quot;</span><span class="p">,</span> <span class="s">&quot;not&quot;</span><span class="p">,</span> <span class="s">&quot;of&quot;</span><span class="p">,</span> <span class="s">&quot;off&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;often&quot;</span><span class="p">,</span> <span class="s">&quot;on&quot;</span><span class="p">,</span> <span class="s">&quot;only&quot;</span><span class="p">,</span> <span class="s">&quot;or&quot;</span><span class="p">,</span> <span class="s">&quot;other&quot;</span><span class="p">,</span> <span class="s">&quot;our&quot;</span><span class="p">,</span> <span class="s">&quot;own&quot;</span><span class="p">,</span> <span class="s">&quot;rather&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;said&quot;</span><span class="p">,</span> <span class="s">&quot;say&quot;</span><span class="p">,</span> <span class="s">&quot;says&quot;</span><span class="p">,</span> <span class="s">&quot;she&quot;</span><span class="p">,</span> <span class="s">&quot;should&quot;</span><span class="p">,</span> <span class="s">&quot;since&quot;</span><span class="p">,</span> <span class="s">&quot;so&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;some&quot;</span><span class="p">,</span> <span class="s">&quot;than&quot;</span><span class="p">,</span> <span class="s">&quot;that&quot;</span><span class="p">,</span> <span class="s">&quot;the&quot;</span><span class="p">,</span> <span class="s">&quot;their&quot;</span><span class="p">,</span> <span class="s">&quot;them&quot;</span><span class="p">,</span> <span class="s">&quot;then&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;there&quot;</span><span class="p">,</span> <span class="s">&quot;these&quot;</span><span class="p">,</span> <span class="s">&quot;they&quot;</span><span class="p">,</span> <span class="s">&quot;this&quot;</span><span class="p">,</span> <span class="s">&quot;tis&quot;</span><span class="p">,</span> <span class="s">&quot;to&quot;</span><span class="p">,</span> <span class="s">&quot;too&quot;</span><span class="p">,</span> <span class="s">&quot;twas&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;us&quot;</span><span class="p">,</span> <span class="s">&quot;wants&quot;</span><span class="p">,</span> <span class="s">&quot;was&quot;</span><span class="p">,</span> <span class="s">&quot;we&quot;</span><span class="p">,</span> <span class="s">&quot;were&quot;</span><span class="p">,</span> <span class="s">&quot;what&quot;</span><span class="p">,</span> <span class="s">&quot;when&quot;</span><span class="p">,</span> <span class="s">&quot;where&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;which&quot;</span><span class="p">,</span> <span class="s">&quot;while&quot;</span><span class="p">,</span> <span class="s">&quot;who&quot;</span><span class="p">,</span> <span class="s">&quot;whom&quot;</span><span class="p">,</span> <span class="s">&quot;why&quot;</span><span class="p">,</span> <span class="s">&quot;will&quot;</span><span class="p">,</span> <span class="s">&quot;with&quot;</span><span class="p">,</span>
-                 <span class="s">&quot;would&quot;</span><span class="p">,</span> <span class="s">&quot;yet&quot;</span><span class="p">,</span> <span class="s">&quot;you&quot;</span><span class="p">,</span> <span class="s">&quot;your&quot;</span><span class="p">])</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create a set of stopwords to ignore</span>
+<span class="n">stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;able&quot;</span><span class="p">,</span> <span class="s2">&quot;about&quot;</span><span class="p">,</span> <span class="s2">&quot;across&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;almost&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;also&quot;</span><span class="p">,</span> <span class="s2">&quot;am&quot;</span><span class="p">,</span> <span class="s2">&quot;among&quot;</span><span class="p">,</span> <span class="s2">&quot;an&quot;</span><span class="p">,</span> <span class="s2">&quot;and&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span><span class="p">,</span> <span class="s2">&quot;are&quot;</span><span class="p">,</span> <span class="s2">&quot;as&quot;</span><span class="p">,</span> <span class="s2">&quot;at&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;be&quot;</span><span class="p">,</span> <span class="s2">&quot;because&quot;</span><span class="p">,</span> <span class="s2">&quot;been&quot;</span><span class="p">,</span> <span class="s2">&quot;but&quot;</span><span class="p">,</span> <span class="s2">&quot;by&quot;</span><span class="p">,</span> <span class="s2">&quot;can&quot;</span><span class="p">,</span> <span class="s2">&quot;cannot&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;could&quot;</span><span class="p">,</span> <span class="s2">&quot;dear&quot;</span><span class="p">,</span> <span class="s2">&quot;did&quot;</span><span class="p">,</span> <span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="s2">&quot;does&quot;</span><span class="p">,</span> <span class="s2">&quot;either&quot;</span><span class="p">,</span> <span class="s2">&quot;else&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;ever&quot;</span><span class="p">,</span> <span class="s2">&quot;every&quot;</span><span class="p">,</span> <span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="s2">&quot;get&quot;</span><span class="p">,</span> <span class="s2">&quot;got&quot;</span><span class="p">,</span> <span class="s2">&quot;had&quot;</span><span class="p">,</span> <span class="s2">&quot;has&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;have&quot;</span><span class="p">,</span> <span class="s2">&quot;he&quot;</span><span class="p">,</span> <span class="s2">&quot;her&quot;</span><span class="p">,</span> <span class="s2">&quot;hers&quot;</span><span class="p">,</span> <span class="s2">&quot;him&quot;</span><span class="p">,</span> <span class="s2">&quot;his&quot;</span><span class="p">,</span> <span class="s2">&quot;how&quot;</span><span class="p">,</span> <span class="s2">&quot;however&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="s2">&quot;into&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;it&quot;</span><span class="p">,</span> <span class="s2">&quot;its&quot;</span><span class="p">,</span> <span class="s2">&quot;just&quot;</span><span class="p">,</span> <span class="s2">&quot;least&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;let&quot;</span><span class="p">,</span> <span class="s2">&quot;like&quot;</span><span class="p">,</span> <span class="s2">&quot;likely&quot;</span><span class="p">,</span> <span class="s2">&quot;may&quot;</span><span class="p">,</span> <span class="s2">&quot;me&quot;</span><span class="p">,</span> <span class="s2">&quot;might&quot;</span><span class="p">,</span> <span class="s2">&quot;most&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;must&quot;</span><span class="p">,</span> <span class="s2">&quot;my&quot;</span><span class="p">,</span> <span class="s2">&quot;neither&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;nor&quot;</span><span class="p">,</span> <span class="s2">&quot;not&quot;</span><span class="p">,</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="s2">&quot;off&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;often&quot;</span><span class="p">,</span> <span class="s2">&quot;on&quot;</span><span class="p">,</span> <span class="s2">&quot;only&quot;</span><span class="p">,</span> <span class="s2">&quot;or&quot;</span><span class="p">,</span> <span class="s2">&quot;other&quot;</span><span class="p">,</span> <span class="s2">&quot;our&quot;</span><span class="p">,</span> <span class="s2">&quot;own&quot;</span><span class="p">,</span> <span class="s2">&quot;rather&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;said&quot;</span><span class="p">,</span> <span class="s2">&quot;say&quot;</span><span class="p">,</span> <span class="s2">&quot;says&quot;</span><span class="p">,</span> <span class="s2">&quot;she&quot;</span><span class="p">,</span> <span class="s2">&quot;should&quot;</span><span class="p">,</span> <span class="s2">&quot;since&quot;</span><span class="p">,</span> <span class="s2">&quot;so&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;some&quot;</span><span class="p">,</span> <span class="s2">&quot;than&quot;</span><span class="p">,</span> <span class="s2">&quot;that&quot;</span><span class="p">,</span> <span class="s2">&quot;the&quot;</span><span class="p">,</span> <span class="s2">&quot;their&quot;</span><span class="p">,</span> <span class="s2">&quot;them&quot;</span><span class="p">,</span> <span class="s2">&quot;then&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;there&quot;</span><span class="p">,</span> <span class="s2">&quot;these&quot;</span><span class="p">,</span> <span class="s2">&quot;they&quot;</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="s2">&quot;tis&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="s2">&quot;too&quot;</span><span class="p">,</span> <span class="s2">&quot;twas&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;us&quot;</span><span class="p">,</span> <span class="s2">&quot;wants&quot;</span><span class="p">,</span> <span class="s2">&quot;was&quot;</span><span class="p">,</span> <span class="s2">&quot;we&quot;</span><span class="p">,</span> <span class="s2">&quot;were&quot;</span><span class="p">,</span> <span class="s2">&quot;what&quot;</span><span class="p">,</span> <span class="s2">&quot;when&quot;</span><span class="p">,</span> <span class="s2">&quot;where&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;which&quot;</span><span class="p">,</span> <span class="s2">&quot;while&quot;</span><span class="p">,</span> <span class="s2">&quot;who&quot;</span><span class="p">,</span> <span class="s2">&quot;whom&quot;</span><span class="p">,</span> <span class="s2">&quot;why&quot;</span><span class="p">,</span> <span class="s2">&quot;will&quot;</span><span class="p">,</span> <span class="s2">&quot;with&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;would&quot;</span><span class="p">,</span> <span class="s2">&quot;yet&quot;</span><span class="p">,</span> <span class="s2">&quot;you&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">])</span>
 
-<span class="c"># Some domain specific words/word-like things to ignore from reddit</span>
-<span class="n">stopwords</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s">&#39;https&#39;</span><span class="p">,</span> <span class="s">&#39;http&#39;</span><span class="p">,</span> <span class="s">&#39;deleted&#39;</span><span class="p">,</span> <span class="s">&#39;gt&#39;</span><span class="p">])</span>
+<span class="c1"># Some domain specific words/word-like things to ignore from reddit</span>
+<span class="n">stopwords</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="s1">&#39;gt&#39;</span><span class="p">])</span>
 <span class="n">stopwords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
 </pre></div>
 
@@ -1139,10 +1141,10 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">re</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">nltk</span>
 
-<span class="n">isword</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;^[0-9a-zA-Z]+$&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">search</span>
+<span class="n">isword</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^[0-9a-zA-Z]+$&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">search</span>
 
 <span class="k">def</span> <span class="nf">to_words</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Convert a comment to a list of words.&quot;&quot;&quot;</span>
@@ -1172,18 +1174,18 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">dask.bag</span> <span class="kn">as</span> <span class="nn">db</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">dask.bag</span> <span class="kn">as</span> <span class="nn">db</span>
 
-<span class="c"># Create a bag of tuples of (subreddit, body)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">from_castra</span><span class="p">(</span><span class="s">&#39;reddit_data.castra&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subreddit&#39;</span><span class="p">,</span> <span class="s">&#39;body&#39;</span><span class="p">],</span> <span class="n">npartitions</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="c1"># Create a bag of tuples of (subreddit, body)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">from_castra</span><span class="p">(</span><span class="s1">&#39;reddit_data.castra&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subreddit&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">],</span> <span class="n">npartitions</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
-<span class="c"># Filter out comments not in r/MachineLearning</span>
-<span class="n">matches_subreddit</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;MachineLearning&#39;</span><span class="p">)</span>
+<span class="c1"># Filter out comments not in r/MachineLearning</span>
+<span class="n">matches_subreddit</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MachineLearning&#39;</span><span class="p">)</span>
 
-<span class="c"># Convert each comment into a list of words, and concatenate</span>
+<span class="c1"># Convert each comment into a list of words, and concatenate</span>
 <span class="n">words</span> <span class="o">=</span> <span class="n">matches_subreddit</span><span class="o">.</span><span class="n">pluck</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">to_words</span><span class="p">)</span><span class="o">.</span><span class="n">concat</span><span class="p">()</span>
 
-<span class="c"># Count the frequencies for each word, and take the top 100</span>
+<span class="c1"># Count the frequencies for each word, and take the top 100</span>
 <span class="n">top_words</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">frequencies</span><span class="p">()</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">top_words</span> <span class="o">=</span> <span class="n">top_words</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
 </pre></div>
@@ -1223,7 +1225,7 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
 <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">top_words</span><span class="p">)</span><span class="o">.</span><span class="n">to_image</span><span class="p">()</span>
 </pre></div>
 
